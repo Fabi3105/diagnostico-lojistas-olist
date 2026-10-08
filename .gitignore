@@ -1,0 +1,7 @@
+# Dados brutos e banco local ficam fora do GitHub (o README explica onde baixar)
+dados/
+*.duckdb
+*.duckdb.wal
+__pycache__/
+*.pyc
+_*
