@@ -1,0 +1,13 @@
+﻿comparacao;nivel;concordancia_pct;kappa
+Fabian x IA original (A);tema;63,1;0,571
+Fabian x IA original (A);tema, com 'não recebido' e 'atraso' fundidos;79,2;0,731
+Fabian x IA original (A);grupo;83,9;0,758
+Fabian x IA validador B;tema;63,8;0,582
+Fabian x IA validador B;tema, com 'não recebido' e 'atraso' fundidos;79,2;0,735
+Fabian x IA validador B;grupo;83,9;0,76
+Fabian x IA validador C;tema;65,1;0,596
+Fabian x IA validador C;tema, com 'não recebido' e 'atraso' fundidos;79,9;0,742
+Fabian x IA validador C;grupo;84,6;0,771
+Fabian x Maioria das 3 IAs;tema;63,8;0,581
+Fabian x Maioria das 3 IAs;tema, com 'não recebido' e 'atraso' fundidos;79,2;0,734
+Fabian x Maioria das 3 IAs;grupo;83,2;0,751

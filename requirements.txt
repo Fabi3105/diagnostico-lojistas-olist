@@ -1,0 +1,6 @@
+# Versões usadas na execução publicada (Python 3.10). Versões próximas devem funcionar.
+pandas==2.3.3
+numpy==2.2.6
+matplotlib==3.10.9
+# opcional: executa as consultas de sql/ no DuckDB em vez do SQLite
+# duckdb>=1.0

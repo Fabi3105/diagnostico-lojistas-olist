@@ -1,6 +1,0 @@
-Estudo de e-commerce (base Olist): comece pelo PLANO.md.
-
-1. Baixe a base no Kaggle e descompacte os 9 CSV em dados\brutos
-2. Instale o DuckDB:  py -m pip install duckdb
-3. Rode a carga:      py rodar_sql.py sql\00_carga.sql
-4. Escreva as consultas em sql\01_exploracao.sql e rode:  py rodar_sql.py sql\01_exploracao.sql

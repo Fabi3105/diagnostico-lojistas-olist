@@ -1,0 +1,69 @@
+﻿tema;descricao;valor_no_csv;texto_procurado;arquivo;esta_no_relatorio
+padrão;GMV;13449530,0;R$ 13,45 milhões;indicadores_padrao.csv;sim
+padrão;pedidos efetivos;97905,0;97.905 pedidos;indicadores_padrao.csv;sim
+padrão;entregues;96203,0;96.203 pedidos entregues;indicadores_padrao.csv;sim
+padrão;atraso;6,8;6,8%;indicadores_padrao.csv;sim
+padrão;nota média;4,12;nota média de 4,12;indicadores_padrao.csv;sim
+padrão;notas 1;10,7;10,7%;indicadores_padrao.csv;sim
+padrão;postagem fora do prazo;9,0;9,0%;indicadores_padrao.csv;sim
+padrão;prazo real mediano;10,0;em 10 dias na mediana;indicadores_padrao.csv;sim
+padrão;prazo prometido mediano;24,0;contra 24 dias prometidos;indicadores_padrao.csv;sim
+padrão;transporte SE;6,0;de 6 dias, no Sudeste;indicadores_padrao.csv;sim
+padrão;transporte N;16,4;a 16 dias, no Norte;indicadores_padrao.csv;sim
+padrão;atraso NE;12,8;| Pedidos atrasados no Nordeste | 12,8% |;indicadores_padrao.csv;sim
+padrão;lojistas ativos ago/2018;1266,0;1.266;indicadores_padrao.csv;sim
+padrão;vendas por lojista ago/2018;671,0;R$ 671;indicadores_padrao.csv;sim
+lojistas;lojistas ativos mar/2018;993,0;993 para;qE_retencao_lojistas_1.csv;sim
+lojistas;vendas por lojista mar/2018;988,0;R$ 988;qE_retencao_lojistas_1.csv;sim
+lojistas;variação lojistas mar-ago/2018;;(+27%);qE_retencao_lojistas_1.csv;sim
+lojistas;variação vendas por lojista mar-ago/2018;;(−32%);qE_retencao_lojistas_1.csv;sim
+lojistas;universo retenção;2072,0;2.072 lojistas;qE_retencao_lojistas_2.csv;sim
+lojistas;inativos;54,7;55% estavam inativos;qE_retencao_lojistas_2.csv;sim
+lojistas;acaso;22,3;acaso explicaria 22%;qE_retencao_lojistas_2.csv;sim
+lojistas;inativos 1 venda;80,4;| 1 venda | 496 | 80% |;qE_retencao_lojistas_2.csv;sim
+lojistas;inativos 10 ou mais;23,9;| 10 ou mais | 460 | 24% |;qE_retencao_lojistas_2.csv;sim
+lojistas;excesso 60 dias;29,3;Com 60 dias sem venda, a saída real fica 29 pontos;qE_retencao_lojistas_5.csv;sim
+lojistas;excesso 180 dias;34,2;com 180 dias, 34 pontos;qE_retencao_lojistas_5.csv;sim
+lojistas;campeões;451,0;| 451 (15%) | 65% |;qF_rfm_lojistas_1.csv;sim
+lojistas;esfriando + em risco;324,0;324 (;qF_rfm_lojistas_1.csv;sim
+lojistas;inativos RFM;1129,0;1.129 (;qF_rfm_lojistas_1.csv;sim
+lojistas;46 lojistas: nota 1;24,48;nota 1 em 24,5% dos pedidos, contra 10,2%;qD_lojistas_problema_1.csv;sim
+lojistas;46 lojistas: % das notas 1;12,03;6% das vendas e 12% das notas 1;qD_lojistas_problema_1.csv;sim
+ativação;Frete acima de 40% do preço;-13,3;| Frete acima de 40% do preço do produto | 388 | −13 pontos |;qH_ativacao_lojistas_2.csv;sim
+ativação;Descrição com até 300 caracteres;-17,5;| Descrição dos produtos com até 300 caracteres | 293 | −18 pontos |;qH_ativacao_lojistas_2.csv;sim
+ativação;1ª venda com nota 1 ou 2;-8,4;| Primeira venda com nota 1 ou 2 | 372 | −8 pontos |;qH_ativacao_lojistas_2.csv;sim
+ativação;Categoria: cama, mesa e banho;15,2;| Categoria cama, mesa e banho | 103 | +15 pontos |;qH_ativacao_lojistas_2.csv;sim
+ativação;Categoria: móveis e decoração;-15,3;| Categoria móveis e decoração | 156 | −15 pontos |;qH_ativacao_lojistas_2.csv;sim
+ativação;cenário com frete e descrição;51,8;passaria de 47% para 52%;qH_ativacao_lojistas_5.csv;sim
+ativação;cenário só descrição;49,5;só com a descrição completa, de 47% para 50%;qH_ativacao_lojistas_5.csv;sim
+lojistas;sobrevivência 3/6/9/12;41,6;66% ainda vendem após 3 meses, 56% após 6, 47% após 9 e 42% após 12;qJ_safras_lojistas_2.csv;sim
+lojistas;sobrevivência por grupo;62,9;"76% continuam após 6 meses e 63% após 12; entre os demais, 38% e 23%";qJ_safras_lojistas_2.csv;sim
+amostra;SP compradores início e fim;49,8;sobe de 37%, no início de 2017, para 50%, em agosto de 2018;qK_estabilidade_amostra_1.csv;sim
+entrega;nota no prazo x atrasado;4,29;"nota média 4,29; atrasados, 2,27";q02_atraso_avaliacao_1.csv;sim
+entrega;nota 0/1/3 dias;4,033;de 4,03, para entregas no dia prometido, para 3,73 com um dia de atraso e 2,68 com três dias;qG_prazo_prometido_1.csv;sim
+entrega;postagem fora x atraso;20,88;atrasam em 21% dos casos, contra 5%;qA_onde_nasce_atraso_2.csv;sim
+entrega;promessa Sudeste;17,0;| Sudeste | 21 dias | 17 dias | 7,0% | 7,3% |;qG_prazo_prometido_4.csv;sim
+entrega;promessa Nordeste;34,0;| Nordeste | 29 dias | 34 dias | 14,4% | 7,3% |;qG_prazo_prometido_4.csv;sim
+entrega;promessa Norte;38,0;| Norte | 37 dias | 38 dias | 12,0% | 14,4% |;qG_prazo_prometido_4.csv;sim
+entrega;promessa mediana 23 → 21;21,0;cairia de 23 para 21 dias;qG_prazo_prometido_3.csv;sim
+entrega;atraso 7,8 → 7,5;7,496;(7,8% hoje, 7,5% com a promessa ajustada);qG_prazo_prometido_3.csv;sim
+entrega;Black Friday atraso;17,26;atraso subiu de 4,9% para 17,3%;qA_onde_nasce_atraso_5.csv;sim
+entrega;comentários no período;8613,0;Nos 8.613 comentários do período;indicadores_padrao_temas.csv;sim
+entrega;tema entrega;42,51712527574597;- 42,5% tratam de **entrega**;indicadores_padrao_temas.csv;sim
+entrega;tema envio;31,835597352838732;- 31,8% tratam de **erro de envio;indicadores_padrao_temas.csv;sim
+entrega;tema produto;18,367583884825265;- 18,4% tratam do **produto**;indicadores_padrao_temas.csv;sim
+método;kappa humano por tema;0,571;kappa de 0,57;qC_validacao_humana_1.csv;sim
+método;kappa fundido;0,731;concordância sobe para 79% (kappa de 0,73);qC_validacao_humana_1.csv;sim
+demanda;R² renda e prazo;0,9;explicam 90% da diferença;q08b_modelo.csv;sim
+demanda;2 dias a menos em cada estado;14228,0;| 2 dias a menos em cada estado | 14 mil | de 10 mil a 19 mil | +15% |;q08b_cenarios.csv;sim
+demanda;4 dias a menos em cada estado;29388,0;| 4 dias a menos em cada estado | 29 mil | de 19 mil a 41 mil | +31% |;q08b_cenarios.csv;sim
+demanda;frete 50-100 por região;21,2;21% do preço no Sudeste, 37% no Nordeste e 41% no Norte;qB_frete_estado_2.csv;sim
+demanda;mesmo estado: transporte;3,67;| 3,7 dias | 9,2 dias |;qA_onde_nasce_atraso_4.csv;sim
+demanda;recompra 90/180;1,31;Só 1,31% dos compradores fazem nova compra em até 90 dias (1,99% em até 180 dias);q07b_recompra_90d_1.csv;sim
+vendas;categoria Perfumaria;-43,1;| Perfumaria | +152% | +43% | −43% |;qI_vendas_categorias_2.csv;sim
+vendas;categoria Brinquedos;-39,7;| Brinquedos | +135% | +42% | −40% |;qI_vendas_categorias_2.csv;sim
+vendas;categoria Cool stuff;-17,7;| Cool stuff | +32% | +9% | −18% |;qI_vendas_categorias_2.csv;sim
+vendas;categoria Cama, mesa e banho;-9,4;| Cama, mesa e banho | +129% | +107% | −9% |;qI_vendas_categorias_2.csv;sim
+vendas;total categorias;22,7;| Total das categorias | +94% | +138% | +23% |;qI_vendas_categorias_2.csv;sim
+vendas;vendas de estreantes;29,9;fizeram 30% das vendas;qI_vendas_categorias_2.csv;sim
+vendas;ticket mín e máx;124,76;entre R$ 125 e R$ 153;qI_vendas_categorias_1.csv;sim

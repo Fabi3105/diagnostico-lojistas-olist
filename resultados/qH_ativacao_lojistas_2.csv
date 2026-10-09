@@ -1,0 +1,14 @@
+﻿fator;lojistas_com_o_fator;efeito_pp;margem_baixa_pp;margem_alta_pp;leitura
+Preço mediano até R$30;321;-0,4;-6,8;6,3;sem efeito claro
+Preço mediano acima de R$250;351;-20,6;-25,1;-16,3;reduz a chance
+Frete acima de 40% do preço;388;-13,3;-18,5;-8,1;reduz a chance
+Descrição com até 300 caracteres;293;-17,5;-22,3;-12,7;reduz a chance
+Apenas 1 foto por produto;934;-5,7;-9,5;-2,3;reduz a chance
+Lojista de SP;1393;6,6;2,7;9,6;aumenta a chance
+1ª venda atrasou;143;-1,4;-8,5;6,2;sem efeito claro
+1ª venda com nota 1 ou 2;372;-8,4;-12,8;-3,3;reduz a chance
+Categoria: cama, mesa e banho;103;15,2;6,8;22,7;aumenta a chance
+Categoria: utilidades domésticas;197;7,7;2,3;13,5;aumenta a chance
+Categoria: móveis e decoração;156;-15,3;-21,5;-8,7;reduz a chance
+Categoria: automotivo;154;-6,0;-12,6;0,4;sem efeito claro
+Categoria: ferramentas e jardim;89;-8,2;-16,9;-0,3;reduz a chance

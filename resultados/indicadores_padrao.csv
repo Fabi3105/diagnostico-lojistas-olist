@@ -1,0 +1,31 @@
+﻿indicador;valor;definicao
+Pedidos efetivos;97905,0;Pedidos de jan/2017 a ago/2018, sem cancelados e indisponíveis
+Vendas (GMV), R$;13449530,0;Soma do preço dos itens, sem frete
+Frete, R$;2234177,0;Soma do frete dos itens
+Frete / vendas, %;16,6;Soma do frete dividida pela soma das vendas
+Pedidos entregues;96203,0;Pedidos efetivos com data de entrega
+Prazo de entrega, dias (mediana);10,0;Dias da compra à entrega, pedidos entregues
+Prazo prometido, dias (mediana);24,0;Dias da compra à data prometida, pedidos entregues
+Pedidos atrasados, %;6,8;Entregues depois da data prometida / entregues
+Postagem pelo lojista, dias (mediana);1,8;Da aprovação do pagamento à entrega à transportadora
+Transporte, dias (mediana);7,1;Da transportadora ao comprador
+Postagem fora do prazo, %;9,0;Entregues à transportadora depois do prazo de envio
+Nota média;4,12;Avaliação mais recente de cada pedido efetivo
+Notas 1, %;10,7;Avaliações com nota 1 / pedidos avaliados
+Transporte SE, dias (mediana);6,0;Por região do comprador
+Postagem SE, dias (mediana);1,8;Por região do comprador
+Atraso SE, %;6,1;Por região do comprador
+Transporte S, dias (mediana);8,8;Por região do comprador
+Postagem S, dias (mediana);1,9;Por região do comprador
+Atraso S, %;5,9;Por região do comprador
+Transporte CO, dias (mediana);10,3;Por região do comprador
+Postagem CO, dias (mediana);1,8;Por região do comprador
+Atraso CO, %;6,5;Por região do comprador
+Transporte NE, dias (mediana);14,0;Por região do comprador
+Postagem NE, dias (mediana);1,9;Por região do comprador
+Atraso NE, %;12,8;Por região do comprador
+Transporte N, dias (mediana);16,4;Por região do comprador
+Postagem N, dias (mediana);1,9;Por região do comprador
+Atraso N, %;8,6;Por região do comprador
+Lojistas ativos em ago/2018;1266,0;Lojistas com ao menos um pedido efetivo no mês
+Vendas por lojista ativo em ago/2018, R$;671,0;GMV do mês / lojistas ativos no mês

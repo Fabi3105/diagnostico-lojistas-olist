@@ -1,0 +1,11 @@
+﻿;lojistas;inativos_pct
+nota_90d: abaixo de 3;39;51,3
+nota_90d: 3 a 4;250;29,6
+nota_90d: 4 a 4,5;385;32,2
+nota_90d: 4,5 a 5;222;36,5
+atraso_90d: 0%;487;38,8
+atraso_90d: até 10%;188;20,2
+atraso_90d: acima de 10%;219;32,4
+postagem_fora_90d: 0%;501;32,9
+postagem_fora_90d: até 20%;242;31,4
+postagem_fora_90d: acima de 20%;151;37,7

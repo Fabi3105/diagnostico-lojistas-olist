@@ -1,0 +1,14 @@
+﻿fator;5+ pedidos (principal);3+ pedidos;10+ pedidos;vendas acima da mediana (R$)
+Preço mediano até R$30;-0,4;3,5;2,0;-12,0
+Preço mediano acima de R$250;-20,6;-18,1;-15,6;32,5
+Frete acima de 40% do preço;-13,3;-15,0;-10,0;-30,1
+Descrição com até 300 caracteres;-17,5;-12,7;-16,0;-17,7
+Apenas 1 foto por produto;-5,7;-6,9;-1,0;-3,9
+Lojista de SP;6,6;4,2;5,2;1,6
+1ª venda atrasou;-1,4;1,4;1,4;0,7
+1ª venda com nota 1 ou 2;-8,4;-11,2;-2,4;-6,1
+Categoria: cama, mesa e banho;15,2;11,3;23,8;14,1
+Categoria: utilidades domésticas;7,7;5,7;4,6;2,8
+Categoria: móveis e decoração;-15,3;-9,8;-11,8;-11,3
+Categoria: automotivo;-6,0;-7,4;-7,9;-4,9
+Categoria: ferramentas e jardim;-8,2;-4,2;-7,8;-6,6

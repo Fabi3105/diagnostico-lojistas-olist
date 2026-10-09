@@ -1,0 +1,9 @@
+﻿nivel;comparacao;concordancia_pct;kappa
+tema;A x B;94,6;0,933
+tema;A x C;95,7;0,947
+tema;B x C;95,1;0,94
+tema;Fleiss (A, B, C);92,8;0,94
+grupo;A x B;97,4;0,961
+grupo;A x C;97,5;0,962
+grupo;B x C;97,9;0,969
+grupo;Fleiss (A, B, C);96,4;0,964

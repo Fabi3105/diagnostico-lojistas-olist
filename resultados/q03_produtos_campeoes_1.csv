@@ -1,0 +1,6 @@
+﻿posicao;produto;categoria;unidades;pedidos;vendedores;faturamento;frete;preco_medio;pct_total;pct_categoria;pos_na_categoria;pos_unidades
+1;bb50f2e2;beleza_saude;195;187;1;63885,0;3721,1;327,62;0,47;5,1;1;15
+2;6cdd5384;beleza_saude;156;151;1;54730,2;4363,79;350,83;0,41;4,4;2;22
+3;d6160fb7;pcs;35;35;1;48899,34;1426,84;1397,12;0,36;21,9;1;296
+4;d1c42706;informatica_acessorios;341;321;1;46916,51;13680,78;137,59;0,35;5,2;1;7
+5;99a4788c;cama_mesa_banho;487;466;2;42938,66;8024,94;88,17;0,32;4,1;1;2

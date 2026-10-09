@@ -1,0 +1,41 @@
+﻿faixa;caracteristica;lojistas;deslancharam_pct;pedidos_90d_mediana
+até R$30;Preço mediano;336;39,3;3,0
+R$30-60;Preço mediano;566;54,6;5,0
+R$60-120;Preço mediano;646;51,9;5,0
+R$120-250;Preço mediano;489;46,0;4,0
+acima de R$250;Preço mediano;355;31,5;3,0
+até 15%;Frete / preço;833;43,8;4,0
+15-25%;Frete / preço;644;54,0;5,0
+25-40%;Frete / preço;508;50,0;4,5
+acima de 40%;Frete / preço;407;35,9;3,0
+1 foto;Fotos por produto;934;44,3;4,0
+2 fotos;Fotos por produto;635;51,7;5,0
+3 fotos;Fotos por produto;447;53,2;5,0
+4 ou mais;Fotos por produto;311;38,9;3,0
+até 300 caracteres;Descrição;293;31,4;3,0
+300-700;Descrição;897;50,4;5,0
+700-1.500;Descrição;850;50,2;5,0
+acima de 1.500;Descrição;287;45,3;4,0
+automotivo;Categoria principal;154;39,0;3,0
+bebes;Categoria principal;80;53,8;5,0
+beleza_saude;Categoria principal;217;46,5;4,0
+brinquedos;Categoria principal;89;58,4;5,0
+cama_mesa_banho;Categoria principal;103;63,1;9,0
+esporte_lazer;Categoria principal;230;50,4;5,0
+ferramentas_jardim;Categoria principal;89;38,2;3,0
+informatica_acessorios;Categoria principal;134;48,5;4,0
+moveis_decoracao;Categoria principal;156;32,7;3,0
+outras;Categoria principal;943;44,0;4,0
+utilidades_domesticas;Categoria principal;197;56,3;5,0
+CO;Estado do lojista;62;45,2;4,0
+NE;Estado do lojista;42;40,5;3,5
+S;Estado do lojista;514;39,1;3,0
+SE (fora SP);Estado do lojista;337;46,6;4,0
+SP;Estado do lojista;1433;49,5;4,0
+1º sem/2017;Entrada;863;46,1;4,0
+1º sem/2018;Entrada;736;47,1;4,0
+2º sem/2017;Entrada;793;46,4;4,0
+atrasou;1ª venda: entrega;149;38,9;3,0
+no prazo;1ª venda: entrega;2103;48,7;4,0
+nota 1-2;1ª venda: nota;384;37,2;3,0
+nota 3-5;1ª venda: nota;1989;48,1;4,0

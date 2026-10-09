@@ -1,0 +1,6 @@
+﻿status;etapa;pedidos;pct_do_status
+canceled;1. antes da aprovação do pagamento;141;22,6
+canceled;2. aprovado, antes do envio;409;65,4
+canceled;3. depois de enviado;69;11,0
+canceled;4. depois de entregue;6;1,0
+unavailable;2. aprovado, antes do envio;609;100,0

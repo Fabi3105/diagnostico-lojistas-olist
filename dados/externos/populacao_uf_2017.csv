@@ -1,0 +1,28 @@
+uf,estado,regiao,populacao_2017,renda_pc_2017
+RO,Rondônia,Norte,1805788,927
+AC,Acre,Norte,829619,728
+AM,Amazonas,Norte,4063614,817
+RR,Roraima,Norte,522636,960
+PA,Pará,Norte,8366628,691
+AP,Amapá,Norte,797722,875
+TO,Tocantins,Norte,1550194,898
+MA,Maranhão,Nordeste,7000229,577
+PI,Piauí,Nordeste,3219257,724
+CE,Ceará,Nordeste,9020460,780
+RN,Rio Grande do Norte,Nordeste,3507003,815
+PB,Paraíba,Nordeste,4025558,874
+PE,Pernambuco,Nordeste,9473266,807
+AL,Alagoas,Nordeste,3375823,634
+SE,Sergipe,Nordeste,2288116,797
+BA,Bahia,Nordeste,15344447,816
+MG,Minas Gerais,Sudeste,21119536,1177
+ES,Espírito Santo,Sudeste,4016356,1141
+RJ,Rio de Janeiro,Sudeste,16718956,1389
+SP,São Paulo,Sudeste,45094866,1601
+PR,Paraná,Sul,11320892,1393
+SC,Santa Catarina,Sul,7001161,1525
+RS,Rio Grande do Sul,Sul,11322895,1550
+MS,Mato Grosso do Sul,Centro-Oeste,2713147,1231
+MT,Mato Grosso,Centro-Oeste,3344544,1193
+GO,Goiás,Centro-Oeste,6778772,1205
+DF,Distrito Federal,Centro-Oeste,3039444,2353

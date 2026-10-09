@@ -1,0 +1,11 @@
+﻿tema_F;atendimento;atraso;cancelamento_estoque;defeito_avaria;falha_entrega;incompleto;nao_recebido;outro;produto_errado;qualidade_anuncio
+atendimento;2;1;4;0;0;0;2;1;0;0
+atraso;0;4;0;0;1;0;24;1;0;0
+cancelamento_estoque;0;0;6;0;0;1;1;0;0;0
+defeito_avaria;0;0;0;5;0;0;0;0;0;1
+falha_entrega;0;0;0;0;2;1;2;0;0;0
+incompleto;0;0;0;0;0;18;0;0;0;0
+nao_recebido;0;0;0;0;0;0;28;1;0;0
+outro;0;0;0;0;0;0;0;3;0;0
+produto_errado;1;0;0;1;0;1;1;0;15;3
+qualidade_anuncio;0;2;0;0;2;0;0;1;2;11

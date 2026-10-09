@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lojistas da Olist: painel</title>
+<meta name="description" content="Painel de diagnóstico dos lojistas da Olist nos marketplaces: retenção, reputação, entrega, demanda por estado e soluções priorizadas por custo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#121a26; --ink-2:#4a5566; --ink-3:#7a8597;
+  --line:#dde2ea; --grid:#e9edf2; --accent:#14325c; --accent-soft:#e3ecf8;
+  --hero1:#0c1d36; --hero2:#14325c;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --muted:#b9c1cc;
+  --seq0:#e6eefa; --seq1:#b9d0f2; --seq2:#7fa9e6; --seq3:#3f7fd6; --seq4:#1d55a6; --seq5:#0f3570;
+  --good:#0f8a5f; --bad:#c6402c;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d131c; --surface:#151e2a; --ink:#ecf1f7; --ink-2:#b4bfcd; --ink-3:#7f8b9b;
+  --line:#26313f; --grid:#1f2935; --accent:#8db8f0; --accent-soft:#1c2c42;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --muted:#3a4656;
+  --seq0:#1a2636; --seq1:#1f3b63; --seq2:#24548f; --seq3:#2f6fc0; --seq4:#5b95e0; --seq5:#a9c9f3;
+  --good:#3cc28d; --bad:#ec6e58; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0d131c; --surface:#151e2a; --ink:#ecf1f7; --ink-2:#b4bfcd; --ink-3:#7f8b9b;
+  --line:#26313f; --grid:#1f2935; --accent:#8db8f0; --accent-soft:#1c2c42;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --muted:#3a4656;
+  --seq0:#1a2636; --seq1:#1f3b63; --seq2:#24548f; --seq3:#2f6fc0; --seq4:#5b95e0; --seq5:#a9c9f3;
+  --good:#3cc28d; --bad:#ec6e58; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;padding:36px 0 28px}
+.hero .kicker{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.hero h1{font:700 clamp(26px,4vw,38px)/1.1 var(--f-display);margin:10px 0 10px;letter-spacing:-.01em}
+.hero p{max-width:760px;margin:0;color:#d6e2f3}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:#b9cbe6}
+.hero .meta a{color:#fff}
+nav.tabs{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav.tabs a{flex:none;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:14px;padding:6px 12px;border-radius:999px}
+nav.tabs a:hover{background:var(--accent-soft);color:var(--ink)}
+nav.tabs .sp{flex:1}
+.themebtn{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:5px 12px;font:500 13px var(--f-body);cursor:pointer}
+section{padding:30px 0 6px}
+h2{font:700 22px/1.2 var(--f-display);margin:0 0 4px}
+.lead{color:var(--ink-2);margin:0 0 16px;max-width:820px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.card h3{font:600 15px/1.3 var(--f-body);margin:0 0 2px}
+.card .sub{font-size:13px;color:var(--ink-3);margin:0 0 10px}
+.card .note{font-size:13px;color:var(--ink-2);margin:10px 0 0;border-top:1px dashed var(--line);padding-top:8px}
+.kpi .lab{font-size:13px;color:var(--ink-2);font-weight:500}
+.kpi .val{font:700 32px/1.1 var(--f-display);margin:6px 0 2px;letter-spacing:-.01em}
+.kpi .ctx{font-size:12.5px;color:var(--ink-3)}
+.kpi .tag{display:inline-block;margin-top:8px;font:500 11px/1 var(--f-mono);padding:4px 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.kpi.alert .val{color:var(--bad)}
+.kpi .val.sm{font-size:24px;line-height:1.25}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--f-body);fill:var(--ink-2);font-size:12px}
+svg .val{fill:var(--ink);font-weight:500}
+svg .axis line,svg .gridl{stroke:var(--grid)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2);margin:2px 0 8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--bg);flex-wrap:wrap}
+.seg button{border:0;background:none;color:var(--ink-2);font:500 13px var(--f-body);padding:5px 11px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink-3);font-weight:500;font-size:12.5px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tile rect{stroke:var(--surface);stroke-width:2;rx:6}
+.tile text{pointer-events:none}
+.finds{counter-reset:f;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.find{position:relative;padding-left:46px}
+.find:before{counter-increment:f;content:counter(f);position:absolute;left:16px;top:16px;font:700 18px var(--f-display);color:var(--s1)}
+.find b{display:block;margin-bottom:2px}
+.find span{font-size:13.5px;color:var(--ink-2)}
+.acts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.act h3{display:flex;gap:8px;align-items:baseline}
+.act h3 em{font:600 12px var(--f-mono);font-style:normal;color:var(--accent);background:var(--accent-soft);padding:3px 6px;border-radius:5px}
+.act ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+.act li{margin:3px 0}
+#tip{position:fixed;pointer-events:none;z-index:20;background:var(--ink);color:var(--surface);padding:7px 10px;border-radius:8px;font-size:12.5px;line-height:1.4;max-width:240px;opacity:0;transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+#tip b{font-weight:600}
+footer{padding:28px 0 40px;color:var(--ink-3);font-size:13px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+@media (max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+@media (max-width:520px){.wrap{padding:0 16px}.kpi .val{font-size:28px}}
+
+nav.tabs{position:static}
+.filtros{position:sticky;top:0;z-index:6;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.fbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding-top:10px;padding-bottom:10px}
+.fbar label{display:flex;flex-direction:column;font-size:11.5px;color:var(--ink-3);gap:3px;font-weight:500}
+.fbar select{font:500 13.5px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px;min-width:96px;max-width:200px}
+.limpar{align-self:flex-end;border:1px solid var(--line);background:var(--bg);color:var(--ink-2);border-radius:8px;padding:7px 12px;font:500 13px var(--f-body);cursor:pointer}
+.fnote{align-self:flex-end;font-size:12.5px;color:var(--ink-2);padding-bottom:7px}
+.tagf{font:500 11px/1 var(--f-mono);padding:4px 7px;border-radius:6px;background:var(--grid);color:var(--ink-3);white-space:nowrap}
+.tagf.on{background:var(--accent-soft);color:var(--accent)}
+.row h2,.row h3{margin:0}
+.nv{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
+.nv.b{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.nv.m{background:color-mix(in srgb,var(--s4) 22%,transparent);color:var(--ink)}
+.nv.a{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+table.sol td{vertical-align:middle}
+@media (max-width:640px){.filtros{position:static}.fbar label{flex:1 1 44%}.fbar select{max-width:none;width:100%}.fnote{flex-basis:100%}}
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Estudo independente · base pública e amostral da Olist · jan/2017 a ago/2018</div>
+    <h1>Lojistas da Olist nos marketplaces</h1>
+    <p>Painel de diagnóstico do ponto de vista do cliente da Olist, o lojista: quem continua vendendo, o que afeta a reputação compartilhada nos marketplaces e onde a logística limita as vendas.</p>
+    <div class="meta"><span>Análise: Fabian Aliatti Mayer</span><span>Execução com apoio de IA (Claude)</span><a href="RELATORIO.pdf">Relatório completo (PDF)</a></div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Seções">
+  <div class="wrap">
+    <a href="#lojistas">Lojistas</a><a href="#entrega">Entrega e reputação</a><a href="#geografia">Demanda e geografia</a><a href="#vendas">Vendas</a><a href="#solucoes">Soluções</a>
+    <span class="sp"></span><button class="themebtn" id="themebtn" type="button">Tema</button>
+  </div>
+</nav>
+
+<div class="filtros" id="filtros">
+  <div class="wrap fbar">
+    <label>De <select id="f-ini"></select></label>
+    <label>Até <select id="f-fim"></select></label>
+    <label>Região do comprador <select id="f-reg"></select></label>
+    <label>Estado <select id="f-uf"></select></label>
+    <label>Categoria <select id="f-cat"></select></label>
+    <button type="button" id="f-limpar" class="limpar">Limpar filtros</button>
+    <span class="fnote" id="f-resumo"></span>
+  </div>
+</div>
+
+<main class="wrap">
+<section id="indicadores" style="padding-top:22px">
+  <div class="row"><h2>Indicadores do período</h2><span class="tagf on">Responde aos filtros</span></div>
+  <p class="lead">Pedidos efetivos (sem cancelados e indisponíveis), conforme os filtros acima. Sem filtros, os valores são os mesmos do relatório (seção 5). Prazos em mediana; notas em média.</p>
+  <div class="grid kpis" id="kpis"></div>
+</section>
+
+<section id="lojistas">
+  <h2>Lojistas, o cliente da Olist</h2>
+  <p class="lead">Vender pouco nos primeiros 90 dias é o sinal mais forte de que o lojista vai parar de vender. A base de lojistas cresceu mais rápido do que as vendas.</p>
+  <div class="grid kpis" id="kpis-loj"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><div class="row"><h3>Lojistas ativos e vendas por lojista</h3><span class="tagf on">Período</span></div><p class="sub">Índice: primeiro mês do período = 100</p>
+      <div class="legend"><span><i style="background:var(--s2)"></i>Lojistas ativos</span><span><i style="background:var(--muted)"></i>Vendas totais</span><span><i style="background:var(--s1)"></i>Vendas por lojista</span></div>
+      <div id="c-loj-idx"></div>
+      <p class="note">Mais lojistas dividindo as mesmas vendas: de mar/2018 a ago/2018, as vendas por lojista ativo caíram 32%.</p></div>
+    <div class="card"><div class="row"><h3>Quem para de vender</h3><span class="tagf">Fixo</span></div><p class="sub">Lojistas que começaram até fev/2018, conforme as vendas nos primeiros 90 dias</p>
+      <div class="legend"><span><i style="background:var(--s2)"></i>Ficaram inativos</span><span><i style="background:var(--muted)"></i>Esperado só pelo acaso da amostra</span></div>
+      <div id="c-inativos"></div>
+      <p class="note">Entre lojistas com volume parecido, atraso e postagem quase não mudam a chance de ficar inativo. O resultado se mantém com 60, 90 ou 180 dias sem venda como critério (saída real de 29 a 34 pontos acima do acaso). Associação, não causa.</p></div>
+    <div class="card"><div class="row"><h3>Grupos de lojistas</h3><span class="tagf">Fixo</span></div><p class="sub">Por última venda, número de pedidos e valor vendido (RFM)</p>
+      <div class="legend"><span><i style="background:var(--muted)"></i>% dos lojistas</span><span><i style="background:var(--s1)"></i>% das vendas dos últimos 90 dias</span></div>
+      <div id="c-rfm"></div>
+      <p class="note">Esfriando + em risco: 324 lojistas que já venderam bem, alvo de reativação. Novos: 468, alvo de ativação.</p></div>
+    <div class="card"><div class="row"><h3>Lojistas com excesso de notas negativas</h3><span class="tagf">Fixo</span></div><p class="sub">46 lojistas comparados aos outros 582 com volume suficiente</p>
+      <div class="legend"><span><i style="background:var(--s2)"></i>46 lojistas</span><span><i style="background:var(--muted)"></i>Outros 582</span></div>
+      <div id="c-dgrupo"></div>
+      <p class="note">O tamanho do grupo depende do critério (17 a 95 lojistas em 27 testes), mas o padrão se repete. 28 deles estão entre os Campeões.</p></div>
+    <div class="card"><div class="row"><h3>Quem vende no começo continua</h3><span class="tagf">Fixo</span></div><p class="sub">% de lojistas ainda vendendo, por meses desde a primeira venda (safras a partir de jan/2017; cada ponto usa só os lojistas com aquele tempo de observação)</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>5+ vendas nos primeiros 90 dias</span><span><i style="background:var(--muted)"></i>Todos</span><span><i style="background:var(--s2)"></i>Até 4 vendas</span></div>
+      <div id="c-sobrev"></div>
+      <p class="note">Após 12 meses, 63% dos que começaram bem ainda vendem, contra 23% dos demais. As safras de 2017 têm curvas parecidas entre si.</p></div>
+    <div class="card"><div class="row"><h3>A amostra é estável no tempo?</h3><span class="tagf">Fixo</span></div><p class="sub">Participação de São Paulo entre compradores e lojistas, mês a mês</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Compradores em SP</span><span><i style="background:var(--s4)"></i>Lojistas em SP</span></div>
+      <div id="c-amostra"></div>
+      <p class="note">Ticket, entregues e avaliados são estáveis, mas a participação de SP entre compradores sobe de 37% para 50%. Pode ser crescimento real ou efeito da amostra: leia tendências de prazo e frete por região.</p></div>
+    <div class="card" style="grid-column:1/-1"><div class="row"><h3>O que diferencia o lojista novo que deslancha</h3><span class="tagf">Fixo</span></div><p class="sub">Efeito de cada fator na chance de chegar a 5 ou mais pedidos nos primeiros 90 dias, com os demais fatores fixos (2.392 lojistas que entraram de jan/2017 a mai/2018; 47% deslancharam)</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Aumenta a chance</span><span><i style="background:var(--s2)"></i>Reduz a chance</span><span><i style="background:var(--muted)"></i>Sem efeito claro</span><span>Traço: margem de erro de 90%</span></div>
+      <div id="c-ativ"></div>
+      <p class="note">A descrição do anúncio é alavanca do lojista; quem controla o frete cobrado do comprador é uma pergunta aberta (ver o briefing do negócio). O preço entrou no modelo como controle e não é mostrado: o efeito dele se inverte quando o critério é o valor vendido, e não o número de pedidos. Associação, não causa.</p></div>
+  </div>
+</section>
+
+<section id="entrega">
+  <h2>Entrega e reputação</h2>
+  <p class="lead">A reputação nos marketplaces é compartilhada por todos os lojistas e depende, antes de tudo, da entrega no prazo.</p>
+  <div class="grid g2">
+    <div class="card"><div class="row"><h3>Atraso e notas 1 mês a mês</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">% dos pedidos entregues com atraso e % dos avaliados com nota 1</p>
+      <div class="legend"><span><i style="background:var(--s2)"></i>Pedidos atrasados</span><span><i style="background:var(--s1)"></i>Notas 1</span></div>
+      <div id="c-atraso-mes"></div>
+      <p class="note">As notas 1 acompanham o atraso: os picos são a Black Friday (nov/2017) e fev–mar/2018.</p></div>
+    <div class="card"><div class="row"><h3>Nota conforme a data de entrega</h3><span class="tagf">Fixo</span></div><p class="sub">Nota média por dias entre a entrega e a data prometida</p>
+      <div id="c-nota-dias"></div>
+      <p class="note">Chegar muito antes quase não melhora a nota; um dia de atraso já derruba de 4,03 para 3,73.</p></div>
+    <div class="card"><div class="row"><h3>Etapas da entrega por região</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">Dias, mediana dos pedidos entregues</p>
+      <div class="legend"><span><i style="background:var(--s4)"></i>Postagem pelo lojista</span><span><i style="background:var(--s1)"></i>Transporte</span></div>
+      <div id="c-etapas"></div>
+      <p class="note">A postagem é parecida em todo o país; a diferença está no transporte.</p></div>
+    <div class="card"><div class="row"><h3>Motivos das notas 1</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">Comentários de nota 1 classificados com IA; conferidos por outras duas IAs (95% de concordância) e por uma pessoa (84% nos grupos)</p>
+      <div id="c-temas"></div>
+      <p class="note">Três em cada quatro reclamações são de entrega ou de erro de envio. Em 83% dos "não recebido", o comprador avaliou antes de o pedido chegar.</p></div>
+    <div class="card" style="grid-column:1/-1"><div class="row"><h3>Promessa de prazo: atual e ajustada por rota</h3><span class="tagf">Fixo</span></div><p class="sub">Promessa de cada rota = prazo em que 93% das entregas chegaram em 2017, testada nos pedidos de 2018</p>
+      <div class="legend"><span><i style="background:var(--muted)"></i>Promessa atual</span><span><i style="background:var(--s1)"></i>Promessa ajustada</span></div>
+      <div id="c-prazo"></div>
+      <p class="note">Mais curta onde a entrega é rápida (Sudeste: 21 → 17 dias, mesma nota) e mais honesta onde é lenta (Nordeste: atraso de 14,4% para 7,3%). No Nordeste há uma troca: a promessa mais longa pode reduzir a conversão, por isso a mudança deve ser testada antes.</p></div>
+  </div>
+</section>
+
+<section id="geografia">
+  <h2>Demanda e geografia</h2>
+  <p class="lead">Onde o prazo e o frete são maiores, uma parcela muito menor da população compra. Escolha o indicador do mapa.</p>
+  <div class="grid g2">
+    <div class="card">
+      <div class="row"><h3>Mapa do Brasil por estado</h3><span class="tagf on">Período e categoria</span></div>
+      <div class="seg" id="seg-map" role="group" aria-label="Indicador do mapa"></div>
+      <p class="sub" id="map-sub" style="margin-top:8px"></p>
+      <div id="c-map"></div>
+      <div id="map-leg" class="legend" style="margin-top:6px"></div>
+    </div>
+    <div class="card"><div class="row"><h3>Prazo real e pedidos por habitante</h3><span class="tagf on">Período e categoria</span></div><p class="sub">Cada ponto é um estado</p>
+      <div id="c-scatter"></div>
+      <p class="note">Entre estados de renda parecida, cada dia a menos de prazo está associado a cerca de 12% mais compradores por habitante (margem de 8% a 16%).</p></div>
+    <div class="card"><div class="row"><h3>Frete como % do preço, por região</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">Soma do frete dividida pela soma das vendas</p>
+      <div id="c-frete"></div></div>
+    <div class="card"><div class="row"><h3>Cenários de redução do prazo</h3><span class="tagf">Fixo</span></div><p class="sub">Compradores a mais, mantida a renda de cada estado (base: 95 mil)</p>
+      <table><thead><tr><th>Cenário</th><th class="n">Compradores a mais</th><th class="n">Margem de erro</th></tr></thead><tbody id="t-cen"></tbody></table>
+      <p class="note">Extrapolação de uma comparação entre estados, não efeito comprovado.</p>
+      <table style="margin-top:12px"><thead><tr><th></th><th class="n">Lojista no mesmo estado</th><th class="n">Em outro estado</th></tr></thead>
+      <tbody><tr><td>Transporte</td><td class="n">3,7 dias</td><td class="n">9,2 dias</td></tr><tr><td>Atraso</td><td class="n">4,6%</td><td class="n">8,1%</td></tr><tr><td>Frete por item</td><td class="n">R$ 13,45</td><td class="n">R$ 23,69</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="vendas">
+  <h2>Vendas</h2>
+  <p class="lead">Vendas dos lojistas (GMV, sem frete). O ticket ficou estável: a estagnação de 2018 vem do número de pedidos, enquanto o número de lojistas continuou crescendo. Por ser amostra, as tendências devem ser lidas com cautela.</p>
+  <div class="grid g2">
+    <div class="card"><div class="row"><h3>Vendas por mês</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">R$ mil</p><div id="c-vendas"></div></div>
+    <div class="card"><div class="row"><h3>Participação das categorias</h3><span class="tagf on">Período e região</span></div><p class="sub">15 maiores categorias e demais</p><div id="c-cats"></div></div>
+    <div class="card"><div class="row"><h3>Ticket médio por mês</h3><span class="tagf on">Responde aos filtros</span></div><p class="sub">Vendas divididas pelo número de pedidos, por mês</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Ticket médio (R$)</span></div>
+      <div id="c-ticket"></div></div>
+    <div class="card"><div class="row"><h3>Lojistas cresceram mais que as vendas?</h3><span class="tagf">Fixo</span></div><p class="sub">Variação das vendas por lojista ativo de jan–ago/2017 para jan–ago/2018 (15 maiores categorias; passe o mouse para ver lojistas e vendas)</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Venda por lojista subiu</span><span><i style="background:var(--s2)"></i>Caiu: lojistas cresceram mais que as vendas</span></div>
+      <div id="c-catloj"></div>
+      <p class="note">Em perfumaria, brinquedos e cool stuff, os lojistas cresceram bem mais que as vendas: a venda por lojista caiu entre 18% e 43%. Lojistas que estrearam em 2018 fizeram 30% das vendas de jan–ago/2018.</p></div>
+  </div>
+</section>
+
+<section id="solucoes">
+  <h2>Soluções propostas, ordenadas por custo</h2>
+  <p class="lead">Relatório de direcionamento: a ordem indica o que estudar primeiro. Custos estimados de forma qualitativa, porque a base não tem dados de custo.</p>
+  <div class="card" style="margin-bottom:16px"><h3>Próximos 90 dias: o que testar primeiro</h3>
+    <p class="sub" style="margin-top:6px">Pilotos com grupo de comparação, decididos pelos indicadores do relatório (seção 5). Só três metas têm apoio nos dados; as demais ficam em aberto para a Olist definir.</p>
+    <table><thead><tr><th>Piloto</th><th>Hipótese</th><th>Como medir</th></tr></thead><tbody>
+    <tr><td>1. Promessa por rota</td><td>Sudeste com promessa mais curta sem perder nota; Nordeste com menos atraso</td><td>Atraso, nota e conversão nas rotas testadas x rotas sem mudança</td></tr>
+    <tr><td>2. Avaliação após a entrega</td><td>Menos notas 1 de "não recebido"</td><td>Participação das notas 1 de entrega nos pedidos do piloto</td></tr>
+    <tr><td>7. Ativação do lojista novo</td><td>Descrição completa (e revisão do frete, se o lojista o controlar) aumenta quem chega a 5 pedidos</td><td>% de lojistas com 5+ pedidos em 90 dias: metade dos novos de um mês recebe o apoio</td></tr>
+    </tbody></table></div>
+  <div class="card" style="overflow-x:auto"><table class="sol"><thead><tr><th>#</th><th>Solução</th><th>Custo financeiro</th><th>Custo humano</th><th>Potencial</th></tr></thead><tbody id="t-sol"></tbody></table></div>
+</section>
+<section id="padrao"><div class="card"><h3>Como ler os números</h3><p class="sub" style="margin-top:6px">Período padrão: jan/2017 a ago/2018. Pedidos efetivos: sem cancelados e indisponíveis (os temas das notas 1 incluem os cancelados, de onde vêm as queixas de estoque). Prazos e atraso: só pedidos entregues. Tempos em mediana; notas em média. Cartões marcados como "Fixo" usam a base de cada análise, descrita no Anexo A do relatório.</p></div></section>
+</main>
+<footer><div class="wrap">Fonte: <i>Brazilian E-Commerce Public Dataset by Olist</i> (Kaggle, CC BY-NC-SA 4.0), base amostral; IBGE (SIDRA 6579 e 7531); malha de estados do IBGE. Associação entre fatores não prova causa.</div></footer>
+<div id="tip" role="tooltip"></div>
+<script>
+const D = __DATA__;
+const GEO = {"RO":"M148 243L150 243L151 245L154 247L158 248L163 248L166 248L167 250L169 251L174 247L174 245L175 242L177 241L178 236L181 233L180 230L179 227L177 223L179 221L179 218L173 216L166 215L160 215L160 212L160 207L158 203L159 200L158 198L158 195L158 192L159 190L160 188L158 186L157 184L154 187L151 186L151 183L148 182L147 180L145 178L142 175L132 175L131 178L128 180L128 182L127 185L126 188L123 189L120 188L117 188L115 190L114 194L112 192L110 193L107 194L105 196L102 194L100 194L97 194L96 197L92 199L94 200L99 200L102 199L106 199L108 200L109 197L111 200L111 205L110 207L110 210L110 212L111 215L110 217L111 222L112 225L114 228L117 228L119 230L121 231L122 234L124 234L128 235L131 234L135 236L136 237L139 237L140 239L143 241L145 242L148 243Z","AC":"M87 198L85 196L83 196L77 193L74 192L68 189L65 186L61 183L58 180L53 176L50 173L44 173L37 172L33 171L26 170L23 170L18 169L14 168L3 164L4 166L1 167L0 170L2 172L4 174L5 176L6 180L8 182L11 186L12 187L13 190L11 193L10 194L16 194L19 195L21 195L22 198L23 202L33 202L35 201L37 200L40 197L44 194L43 197L43 200L43 203L43 207L43 211L43 215L45 216L49 216L52 214L54 215L58 214L61 214L65 215L67 215L69 216L71 216L73 214L76 210L80 211L82 209L85 207L89 205L90 203L94 200L92 199L87 198Z","AM":"M202 167L202 165L200 162L198 159L199 157L201 155L206 144L212 129L217 118L219 114L224 102L225 100L227 99L228 96L224 98L222 98L220 98L220 96L216 95L213 92L209 91L205 88L204 85L202 86L200 85L199 83L196 79L195 76L193 74L193 71L193 66L188 66L186 66L178 66L176 71L173 77L175 79L172 80L170 81L168 79L167 77L163 76L160 78L158 83L158 87L159 89L160 91L158 89L156 88L153 85L150 83L148 81L147 79L149 78L151 74L150 72L149 70L147 67L147 65L146 61L147 57L145 51L143 49L144 44L142 43L140 43L138 41L135 40L133 42L130 44L127 44L127 48L123 51L120 51L118 53L115 53L113 55L113 57L110 57L109 61L108 59L107 56L105 56L103 58L100 60L98 60L91 53L88 54L88 51L88 47L86 45L84 40L81 43L79 43L77 46L75 45L73 46L59 47L55 47L53 47L53 55L60 55L62 58L62 61L59 62L58 60L56 61L53 62L50 62L50 69L50 72L52 74L56 76L56 80L57 82L59 85L58 88L56 102L53 118L52 126L49 126L47 126L44 124L41 125L39 128L35 128L32 128L28 129L26 131L22 133L20 134L18 136L14 138L13 142L13 144L11 147L9 151L11 154L10 157L4 159L3 161L2 164L14 168L18 169L23 170L26 170L33 171L37 172L44 173L50 173L53 176L58 180L61 183L65 186L68 189L74 192L77 193L83 196L85 196L87 198L92 199L94 197L97 195L100 194L102 194L104 196L106 195L109 195L111 192L113 195L116 192L117 188L120 189L123 188L126 188L126 185L128 183L128 180L130 180L132 176L142 175L144 177L146 179L148 181L149 184L151 186L154 187L157 184L158 186L173 186L190 186L198 186L199 183L200 180L200 177L199 173L201 170L201 168Z","RR":"M125 24L126 26L125 29L127 33L128 35L127 37L129 37L133 37L135 37L135 40L138 41L140 43L142 43L144 44L144 47L144 49L146 55L147 59L146 64L147 67L149 70L150 72L151 74L149 77L148 79L146 80L150 83L153 85L154 88L158 89L160 91L159 89L158 87L159 84L159 80L163 77L167 77L168 79L169 81L172 81L175 79L173 77L176 71L178 66L186 66L188 66L193 66L193 53L191 52L188 51L186 49L184 47L182 46L182 43L182 39L179 34L179 31L180 27L181 25L181 23L183 21L185 18L182 15L183 12L179 10L176 10L178 8L179 3L177 0L174 1L171 1L171 4L169 7L166 8L166 10L162 10L160 11L159 14L156 13L153 15L151 16L148 15L146 15L144 16L144 19L140 22L139 20L138 17L134 17L132 17L128 18L126 16L122 15L117 13L121 20L124 21L125 22Z","PA":"M329 135L331 133L334 131L337 130L339 126L340 124L343 121L344 117L345 114L347 112L348 108L349 106L351 104L352 102L352 100L354 98L354 95L353 93L355 91L356 87L356 84L355 81L353 83L351 81L349 83L349 80L347 81L345 79L342 80L339 78L338 79L337 77L335 78L333 77L331 78L329 80L328 82L326 81L326 75L326 73L322 73L320 73L317 71L314 72L314 70L311 69L311 67L313 65L308 65L304 65L306 63L303 61L301 61L298 66L297 68L294 69L292 71L289 74L288 76L286 78L285 80L284 84L282 85L279 86L276 84L275 81L274 77L272 76L272 74L269 72L268 69L267 67L266 65L266 62L263 57L262 55L261 52L256 51L254 50L250 46L247 46L245 44L245 41L244 38L243 36L241 36L238 36L236 37L233 38L230 36L229 39L230 42L231 45L228 45L224 44L220 44L218 44L216 43L214 44L211 45L209 47L207 47L204 48L204 50L202 49L200 49L198 50L198 53L195 53L193 54L193 66L193 70L193 74L195 76L195 78L198 81L200 85L202 86L204 84L204 87L208 90L212 93L216 93L219 96L220 98L222 98L224 98L227 97L225 100L224 102L220 113L218 117L212 129L206 144L201 155L199 157L198 159L200 162L202 165L202 167L205 171L206 175L209 178L208 181L209 185L211 186L214 188L216 190L219 192L220 194L226 194L231 194L242 195L247 196L254 196L260 197L266 197L273 198L277 198L289 199L295 199L303 200L305 196L306 192L308 190L310 187L313 184L314 181L316 178L317 176L317 173L315 171L314 169L316 167L316 165L316 163L318 160L321 159L323 158L324 155L325 154L326 152L328 150L329 148L328 145L330 144L327 142L324 141L322 140L326 137L329 135Z","AP":"M297 41L296 37L295 33L293 27L292 24L292 18L291 15L287 11L285 10L285 12L285 16L283 18L281 21L278 27L276 28L274 33L274 36L272 38L270 39L267 40L264 41L264 39L262 40L258 39L256 40L253 41L249 41L247 39L246 37L245 41L245 43L246 46L249 47L253 48L256 50L261 52L262 55L263 57L266 61L266 65L267 67L268 69L269 72L272 74L272 76L274 77L274 81L275 84L279 85L281 85L283 85L285 80L286 78L288 76L289 74L291 71L294 69L297 68L298 66L301 61L303 61L306 58L308 56L307 53L308 50L307 47L304 46L301 46L297 41ZM300 42L300 45L302 43Z","TO":"M339 155L340 152L339 150L339 147L338 144L337 142L334 141L332 139L329 139L327 138L324 139L322 140L324 141L327 141L330 144L328 145L329 148L328 150L326 152L327 154L324 155L323 158L321 159L318 160L316 161L316 164L316 167L314 169L315 171L317 173L317 176L316 178L315 180L314 183L311 186L308 189L307 192L305 196L303 200L302 202L301 204L301 206L299 210L298 214L297 219L297 222L297 225L298 227L297 231L298 234L297 237L298 239L301 237L302 235L304 233L304 236L302 239L304 240L307 241L314 245L316 240L319 241L320 239L323 242L324 246L325 243L326 245L330 243L329 245L332 246L334 246L336 248L336 244L339 245L346 242L349 241L351 241L356 240L353 241L354 238L353 236L353 233L352 230L353 227L352 225L355 223L353 222L350 220L353 214L354 213L356 210L359 208L361 205L358 205L355 204L351 203L351 201L349 198L350 196L349 194L346 192L345 190L344 189L345 187L346 183L347 180L350 180L351 176L349 174L347 175L344 176L342 173L339 169L337 168L337 166L335 164L337 162L338 160L338 157L339 155Z","MA":"M331 133L329 135L326 137L322 140L324 139L327 138L329 139L331 139L333 140L336 141L338 144L339 147L339 149L340 152L339 155L338 157L338 160L337 162L336 164L336 166L338 167L339 169L341 173L344 176L347 175L349 174L351 176L350 180L348 180L346 182L345 187L344 189L345 190L346 192L349 194L350 196L349 198L351 201L351 203L353 204L357 204L359 201L359 198L360 195L359 193L358 189L358 186L361 181L362 177L363 174L364 171L369 169L372 167L375 165L378 164L379 162L381 160L384 159L386 158L389 160L392 159L396 159L397 156L397 153L396 151L394 148L394 144L396 142L398 140L397 134L396 132L397 129L396 127L396 125L398 122L400 120L400 118L402 115L405 115L407 114L408 112L410 110L410 106L408 106L405 105L402 105L400 104L395 102L392 101L389 101L387 103L388 100L386 102L384 104L382 106L379 106L381 104L382 101L380 102L377 107L376 110L374 110L374 107L376 104L378 101L377 98L374 100L376 96L376 94L373 93L375 91L372 91L372 88L371 90L367 89L366 91L366 87L364 89L363 87L361 87L359 86L359 84L358 86L355 87L355 89L354 93L354 95L354 98L352 100L352 102L351 104L349 106L348 108L349 111L347 113L345 116L343 121L340 124L339 126L337 130L334 131L331 133ZM377 106L375 109L377 109L377 106Z","PI":"M424 179L426 177L427 175L425 172L425 169L427 167L427 165L428 161L428 159L425 158L424 156L424 153L423 150L422 146L422 142L422 138L420 137L418 134L419 131L419 129L419 127L419 124L418 122L418 119L416 117L417 114L417 112L417 109L415 108L413 108L411 106L410 108L408 112L407 114L405 115L402 116L400 117L400 120L398 122L396 125L396 127L397 129L396 132L397 134L398 138L396 142L394 144L394 147L395 150L397 153L397 156L396 159L392 159L390 160L387 158L384 159L381 160L379 162L378 164L375 165L374 167L370 169L366 170L363 174L362 177L361 181L359 185L357 188L359 193L360 195L359 198L359 200L358 205L360 205L362 203L364 206L365 208L365 210L367 213L369 213L371 214L374 212L375 210L378 209L381 210L383 207L385 206L386 203L386 201L385 199L385 196L388 193L390 192L392 194L394 194L396 195L398 197L401 195L404 193L407 192L409 192L412 190L414 188L416 186L418 184L421 181L424 179Z","CE":"M429 107L426 107L424 107L420 108L418 108L418 110L416 114L417 116L417 118L418 121L419 124L419 127L419 129L419 131L418 133L419 136L422 138L422 142L422 144L423 149L423 152L424 156L425 158L428 159L428 161L427 165L428 167L431 166L435 167L437 166L439 168L441 170L443 171L445 172L447 173L450 170L452 167L451 165L449 162L451 160L451 157L452 155L453 152L454 150L456 149L459 146L460 142L462 140L463 136L466 134L469 134L468 132L465 131L462 128L457 124L454 120L452 119L449 117L446 115L443 112L439 110L437 109L434 108L431 107L429 107Z","RN":"M478 154L480 153L482 155L485 155L488 155L490 155L492 155L495 156L498 155L497 153L496 151L496 149L495 146L494 143L493 141L491 138L487 137L484 136L481 137L476 137L474 135L470 135L469 134L466 134L464 135L462 139L460 142L459 144L457 148L456 150L453 151L452 153L454 154L456 156L458 156L460 154L462 152L464 151L467 150L470 150L469 152L467 154L466 156L466 158L468 158L469 160L471 159L473 159L475 160L478 161L478 157L478 154Z","PB":"M465 169L466 167L469 166L471 167L469 171L470 173L468 175L470 176L472 179L475 178L477 177L477 175L480 173L482 172L484 173L487 172L490 171L491 169L493 168L496 167L498 168L500 169L500 167L500 163L499 160L498 158L498 155L496 156L493 156L490 155L488 155L485 155L483 155L481 153L478 154L479 157L478 160L475 161L474 159L472 158L470 160L468 158L466 158L466 156L467 154L469 152L470 150L467 150L465 151L463 151L461 153L459 155L456 155L454 154L451 156L451 158L449 161L451 163L451 165L451 170L452 172L454 172L456 173L458 172L460 171L462 170L464 169Z","PE":"M416 185L420 185L421 187L423 190L425 191L424 194L428 193L430 190L434 189L435 188L438 186L440 183L443 183L446 185L448 186L450 187L453 187L454 189L456 193L458 191L460 190L461 188L464 189L467 189L468 191L470 192L472 193L475 192L477 193L480 192L482 189L484 187L487 187L489 187L492 186L495 187L496 186L497 183L498 180L499 177L500 175L499 171L498 169L496 167L493 168L491 169L491 171L489 171L486 172L483 173L480 173L478 174L477 177L475 178L473 179L470 178L468 175L470 173L469 171L471 169L470 166L467 167L465 168L463 170L460 171L458 172L456 173L455 171L452 172L450 170L448 172L445 174L443 171L441 170L439 168L437 166L435 167L432 167L429 167L427 166L425 168L426 171L427 173L427 175L424 179L422 181L419 182L416 185Z","AL":"M459 191L457 192L457 194L459 195L461 196L464 197L466 198L468 200L470 201L473 202L474 204L476 205L478 207L480 208L481 206L484 202L486 200L487 198L490 195L492 193L493 192L494 189L496 187L493 187L491 186L488 187L485 187L483 188L481 191L478 192L476 192L474 192L471 193L469 191L467 189L464 189L462 187L460 190Z","SE":"M473 203L470 201L468 200L466 198L464 198L461 196L459 195L459 201L462 202L462 204L461 208L462 210L460 212L457 211L457 214L459 217L459 220L461 221L463 223L467 221L469 219L470 217L472 214L474 212L476 210L479 209L477 206L474 204Z","BA":"M442 183L438 184L435 186L434 189L432 190L429 194L426 195L425 191L423 190L421 187L420 185L417 185L414 188L412 189L410 192L407 192L405 192L402 195L399 196L396 195L395 194L393 194L390 192L388 193L385 195L385 199L387 200L387 203L385 206L383 207L382 210L378 209L376 210L374 211L372 214L369 213L367 213L365 210L365 208L364 206L362 203L361 205L359 208L356 210L355 212L353 214L350 219L352 222L356 223L353 223L353 226L352 229L352 233L354 235L354 238L353 241L356 240L353 242L353 245L356 245L354 247L355 249L354 254L355 257L358 259L357 263L357 266L356 271L360 269L362 268L366 266L369 265L371 263L373 261L376 259L377 258L382 258L385 259L384 262L386 264L389 265L391 264L396 264L400 267L405 269L408 270L411 269L415 273L417 276L419 278L423 276L425 278L428 278L431 278L434 281L436 283L435 285L432 287L430 289L430 293L428 293L426 296L426 299L428 301L429 302L431 304L431 306L435 310L438 312L440 307L443 305L445 303L444 300L444 296L445 293L445 290L446 287L446 284L447 282L448 279L447 277L447 273L447 269L446 265L446 261L447 258L447 253L447 251L447 249L447 247L448 244L451 242L453 242L455 240L459 236L461 234L462 231L463 230L465 225L468 221L465 222L462 222L459 220L459 218L458 215L456 212L459 211L462 211L462 209L463 206L462 204L460 201L458 196L457 194L455 191L455 188L453 188L450 188L448 186L446 185L444 185L442 183Z","MG":"M336 312L333 313L331 313L329 312L323 312L320 312L318 313L316 314L314 316L312 315L310 316L306 315L303 317L300 320L299 322L297 323L296 325L296 327L294 329L293 331L293 335L295 334L297 333L299 331L302 332L304 332L307 333L309 333L313 334L316 334L315 335L317 338L318 336L319 339L321 336L323 336L326 336L329 336L332 334L335 334L337 334L340 335L341 338L342 340L343 343L341 345L343 348L344 351L344 353L347 352L349 353L351 355L349 357L349 360L349 363L349 365L351 367L352 369L352 371L355 372L358 372L360 371L361 369L364 368L366 368L368 367L370 367L372 366L376 365L378 364L380 364L383 362L386 361L388 361L390 361L393 361L395 361L400 359L402 358L405 357L404 355L405 353L406 350L407 348L409 346L410 344L410 340L410 338L412 337L416 337L417 333L419 331L421 327L422 324L420 321L419 319L422 318L420 316L421 314L419 313L420 310L424 309L422 307L425 308L427 306L429 306L431 306L431 304L429 302L428 301L426 299L426 296L427 293L430 293L430 290L432 289L434 286L436 283L434 281L432 280L428 279L425 278L423 276L419 278L417 278L416 274L411 270L409 270L406 269L402 268L397 265L393 263L389 265L386 264L384 263L385 260L383 258L379 258L376 259L373 261L371 263L369 264L367 264L362 268L360 269L358 270L358 267L355 267L353 267L351 264L351 269L346 268L345 271L346 273L345 275L347 279L343 280L340 282L340 284L339 287L341 289L342 293L342 295L340 296L338 299L338 301L341 302L340 305L341 308L339 309L337 311Z","ES":"M418 333L416 337L412 337L410 338L411 340L410 343L412 345L412 349L414 349L417 350L421 351L423 347L425 345L429 341L430 338L431 335L433 331L435 330L438 325L437 322L437 317L437 314L438 312L435 310L431 307L429 306L427 306L425 308L422 307L424 309L420 310L419 312L421 314L420 316L422 318L419 318L420 320L421 322L421 326L419 330L419 332Z","RJ":"M375 372L373 373L372 376L373 378L376 377L374 376L376 374L378 373L381 374L383 373L385 372L388 374L392 374L393 372L393 370L395 370L394 372L400 373L403 373L408 373L409 370L408 368L411 366L412 364L414 363L419 362L421 359L420 355L421 351L419 350L415 350L413 349L412 346L410 344L409 346L406 347L406 349L405 352L404 355L405 357L402 358L400 358L397 360L394 362L391 360L388 361L386 361L383 362L380 363L378 364L376 365L372 366L374 367L377 368L380 368L379 372L376 372L375 372ZM378 376L381 376L378 376ZM385 374L383 374L385 374Z","SP":"M348 358L349 356L351 354L349 352L346 353L344 351L343 348L341 345L343 343L342 340L341 338L340 335L338 334L336 335L334 334L331 336L329 335L326 336L323 336L321 336L321 339L319 336L317 338L315 335L316 334L313 334L311 333L307 333L305 332L302 332L299 331L297 333L295 334L293 335L292 338L289 339L286 342L285 344L285 346L283 348L282 350L281 354L279 355L279 357L277 360L276 362L272 364L268 367L266 369L269 368L271 368L273 368L275 368L278 369L280 367L282 368L284 369L287 369L289 369L291 370L293 371L296 372L298 372L302 372L304 373L306 373L308 374L311 377L311 380L311 382L311 385L313 387L315 389L316 391L315 394L316 396L320 396L324 396L324 399L325 401L326 400L329 400L330 404L333 402L335 398L339 396L343 393L346 390L348 389L352 387L355 387L359 384L363 384L365 384L365 382L369 380L371 378L373 378L371 376L373 373L375 372L376 372L379 372L381 369L378 368L374 368L372 366L370 367L368 367L366 368L364 368L361 369L360 370L358 372L355 372L353 372L351 370L351 367L349 366L348 364L350 362L348 358ZM366 385L366 383L364 386L367 385Z","PR":"M317 396L315 396L316 393L314 390L313 387L311 385L312 382L311 380L311 378L310 376L306 373L304 373L302 373L299 373L296 373L294 371L291 370L289 369L287 369L284 369L282 368L280 367L278 369L275 368L273 368L271 368L269 368L266 369L265 370L263 371L260 374L259 377L256 379L255 382L254 384L253 387L251 389L252 392L251 395L250 397L249 401L249 403L247 406L249 409L251 407L253 407L255 408L257 409L257 412L258 414L260 416L262 417L266 418L269 418L271 418L273 419L279 419L280 420L283 421L287 421L288 423L290 421L290 419L292 416L295 417L297 416L299 413L301 415L304 414L306 413L310 416L313 416L316 414L319 413L323 413L325 411L326 409L327 408L329 406L330 404L329 400L326 400L325 401L324 399L325 396L321 396L317 396Z","SC":"M275 419L272 418L269 418L266 418L263 416L260 417L259 419L259 421L259 423L259 426L257 429L260 429L263 428L265 429L268 428L270 429L272 430L274 430L277 431L279 431L282 433L284 433L286 434L289 436L293 438L295 440L297 443L298 445L301 445L305 446L308 446L310 448L308 449L307 451L307 454L304 455L306 458L307 455L309 457L311 456L312 454L314 452L316 450L321 448L322 446L323 444L324 441L324 439L325 437L327 432L325 432L324 429L324 427L323 425L323 423L323 420L325 416L324 413L320 413L316 414L314 415L311 416L308 414L304 414L301 415L299 413L297 416L295 417L292 416L290 418L291 421L288 422L283 421L280 420L279 419L275 419Z","RS":"M256 492L259 494L260 498L262 500L266 501L268 500L270 498L271 495L272 497L273 499L273 501L271 503L268 503L266 506L264 507L262 509L262 511L261 515L263 516L271 509L273 507L274 504L275 501L277 497L279 495L279 492L277 490L279 488L280 487L282 483L285 483L286 481L288 478L288 475L290 472L291 470L290 467L293 469L294 472L298 470L299 473L297 471L297 475L294 478L291 481L291 483L290 485L288 486L285 489L283 490L279 490L280 494L283 491L288 488L291 486L295 482L302 473L303 470L304 467L305 465L307 461L309 459L309 457L307 455L305 456L307 454L307 451L307 449L309 448L306 445L301 445L298 445L297 443L295 440L293 438L290 436L288 434L285 433L283 433L281 431L278 431L276 430L274 430L271 429L268 429L265 429L263 428L262 429L259 429L256 428L254 430L251 432L249 433L247 434L245 433L244 436L242 438L239 439L237 441L232 443L233 445L231 444L229 447L227 450L225 452L224 454L222 454L221 457L220 458L217 461L215 463L213 465L211 468L210 469L212 470L214 470L215 468L219 467L221 469L223 471L225 473L227 474L229 476L229 480L234 479L237 479L239 483L241 484L244 485L248 485L249 487L254 492Z","MS":"M263 307L260 307L258 308L256 306L257 304L259 298L255 301L254 302L251 303L249 301L246 301L244 303L241 303L238 301L236 301L235 299L230 298L226 297L224 299L220 298L218 301L217 303L215 305L212 305L209 305L208 303L208 305L209 309L207 319L202 331L206 334L202 336L203 339L204 342L206 344L205 346L206 348L206 351L205 355L204 358L204 362L207 362L210 363L213 364L216 363L219 364L222 363L225 361L227 364L232 364L233 368L234 370L234 372L235 376L236 379L236 382L237 386L239 387L242 387L246 385L250 386L251 388L254 385L254 383L256 379L258 378L260 375L261 372L264 370L266 369L268 367L272 364L275 363L277 360L279 357L279 355L281 354L282 352L283 348L285 346L285 344L286 342L288 340L292 338L293 335L293 331L294 329L292 325L288 323L285 322L282 321L280 320L276 318L274 316L271 317L269 316L270 313L267 312L266 309L263 307Z","MT":"M226 194L221 193L219 192L217 192L214 188L211 187L209 185L209 182L209 178L206 175L205 171L203 167L201 168L201 170L200 172L200 177L200 180L199 182L198 185L190 186L173 186L158 186L160 188L159 190L159 192L158 195L160 197L159 200L158 203L159 206L160 212L159 215L166 215L173 215L179 217L180 219L177 223L177 226L179 229L180 231L179 236L177 241L175 242L174 245L174 247L170 249L172 252L174 255L173 259L175 263L175 269L171 269L175 274L176 285L185 285L194 285L199 285L200 288L198 293L199 297L201 299L204 301L207 302L208 304L211 306L215 305L217 303L218 301L220 298L224 299L226 297L229 297L235 299L236 301L238 301L241 303L244 303L246 301L249 301L251 303L254 302L255 301L257 298L259 303L256 306L258 308L260 307L263 307L265 308L267 308L266 304L265 302L265 298L266 296L268 293L270 291L271 290L272 285L274 284L276 282L277 280L280 280L284 277L284 274L285 270L287 269L289 268L292 267L294 262L294 257L295 251L296 248L298 246L299 242L300 240L297 237L298 234L298 231L297 228L297 225L297 222L297 219L298 216L299 212L300 207L301 204L302 202L303 200L295 199L289 199L277 198L273 198L266 197L260 197L254 196L247 196L242 195L231 194L228 194Z","GO":"M329 277L329 275L331 275L338 275L340 276L340 278L340 281L343 280L345 280L346 276L345 274L346 272L345 269L349 269L350 265L353 265L355 267L357 264L357 261L356 258L354 255L354 251L354 248L356 245L353 246L353 242L356 240L353 241L352 239L349 241L346 242L339 245L337 243L336 246L334 246L332 246L329 245L330 243L326 245L325 243L324 246L324 243L321 239L319 241L317 239L314 244L307 241L304 240L302 239L303 236L304 233L302 235L301 237L300 240L299 242L298 246L296 248L296 251L295 256L293 260L292 266L290 268L287 269L285 270L284 274L284 277L282 279L277 280L276 282L274 284L272 285L273 288L270 291L268 293L267 295L265 298L265 301L265 304L267 308L267 312L270 312L268 315L271 317L274 316L276 318L280 320L282 321L285 322L288 323L292 325L294 327L296 325L297 323L299 322L300 320L302 318L305 316L309 316L312 315L314 316L316 314L318 313L320 312L323 312L327 312L331 313L333 313L336 312L339 310L341 308L340 305L341 302L338 301L338 299L340 296L342 295L342 293L342 291L339 289L340 284L340 282L336 282L332 282L328 282L328 279L329 277Z","DF":"M331 282L336 282L340 282L340 280L340 276L338 275L331 275L329 275L329 277L328 279L328 282L331 282Z"};
+const CENT = {"RO":[142,214],"AC":[45,191],"AM":[119,125],"RR":[161,42],"PA":[267,122],"AP":[281,51],"TO":[327,204],"MA":[366,137],"PI":[396,167],"CE":[439,137],"RN":[476,147],"PB":[474,164],"PE":[459,180],"AL":[477,195],"SE":[466,210],"BA":[412,234],"MG":[374,314],"ES":[425,328],"RJ":[400,363],"SP":[322,364],"PR":[285,395],"SC":[300,430],"RS":[264,462],"MS":[244,338],"MT":[231,241],"GO":[311,282],"DF":[334,279]};
+
+const CALLOUT = {RN: [528, 140], PB: [528, 160], PE: [528, 180], AL: [528, 200], SE: [528, 220], ES: [470, 334], RJ: [438, 392], DF: [372, 256]};
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = (v, c = 0) => (+v).toLocaleString('pt-BR', {minimumFractionDigits: c, maximumFractionDigits: c});
+const brl = v => 'R$ ' + fmt(v);
+const brlk = v => v >= 1e6 ? 'R$ ' + fmt(v / 1e6, 2) + ' mi' : 'R$ ' + fmt(v / 1e3, 0) + ' mil';
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, attrs = {}) { const {fill, ...rest} = attrs; const t = el('text', {x, y, ...rest}, parent); if (fill) t.style.fill = fill; t.textContent = s; return t; }
+const tip = $('#tip');
+function showTip(ev, html) { tip.innerHTML = html; tip.style.opacity = 1; const w = tip.offsetWidth, h = tip.offsetHeight; let x = ev.clientX + 14, y = ev.clientY + 14; if (x + w > innerWidth - 8) x = ev.clientX - w - 14; if (y + h > innerHeight - 8) y = ev.clientY - h - 14; tip.style.left = x + 'px'; tip.style.top = y + 'px'; }
+function hideTip() { tip.style.opacity = 0; }
+addEventListener('scroll', hideTip, {passive: true}); addEventListener('blur', hideTip);
+function hover(node, html) { node.addEventListener('pointermove', e => showTip(e, typeof html === 'function' ? html() : html)); node.addEventListener('pointerleave', hideTip); }
+const CW = id => Math.min(560, Math.max(330, $(id).clientWidth || 560));
+function svgBox(id, W, H) { const host = $(id); host.innerHTML = ''; return el('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img'}, host); }
+const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const mesRot = m => MESES[+m.slice(5) - 1] + '/' + m.slice(2, 4);
+const REG = {SE: 'Sudeste', S: 'Sul', CO: 'Centro-Oeste', NE: 'Nordeste', N: 'Norte'};
+const REGNOME = {Sudeste: 'SE', Sul: 'S', 'Centro-Oeste': 'CO', Nordeste: 'NE', Norte: 'N'};
+const UFI = Object.fromEntries(D.uf_info.map(u => [u.uf, u]));
+const UFREG = Object.fromEntries(D.uf_info.map(u => [u.uf, REGNOME[u.regiao]]));
+const catNome = c => c === 'outras' ? 'Demais categorias' : (c.charAt(0).toUpperCase() + c.slice(1)).replace(/_/g, ' ');
+const C = Object.fromEntries(D.cols.map((c, i) => [c, i + 3]));
+/* histogramas por célula (prazos e etapas), para calcular medianas com qualquer filtro */
+const HCOLS = Object.keys(D.hist_fator), HIDX = new Set(HCOLS.map(c => C[c] - 3));
+for (const r of D.cubo) for (const c of HCOLS) { const i = C[c]; r[i] = r[i] ? String(r[i]).split(',').map(p => p.split(':').map(Number)) : []; }
+
+/* ---------- filtros ---------- */
+const F = {ini: 0, fim: D.meses.length - 1, reg: '', uf: '', cat: ''};
+function opts(sel, list, val) { sel.innerHTML = list.map(([v, t]) => `<option value="${v}"${v == val ? ' selected' : ''}>${t}</option>`).join(''); }
+function montaFiltros() {
+  opts($('#f-ini'), D.meses.map((m, i) => [i, mesRot(m)]), F.ini);
+  opts($('#f-fim'), D.meses.map((m, i) => [i, mesRot(m)]), F.fim);
+  opts($('#f-reg'), [['', 'Todas'], ...Object.entries(REG)], F.reg);
+  const ufs = D.ufs.filter(u => !F.reg || UFREG[u] === F.reg);
+  opts($('#f-uf'), [['', 'Todos'], ...ufs.map(u => [u, u + ' · ' + UFI[u].estado])], F.uf);
+  opts($('#f-cat'), [['', 'Todas'], ...D.cats.map(c => [c, catNome(c)])], F.cat);
+  const partes = [`${mesRot(D.meses[F.ini])} a ${mesRot(D.meses[F.fim])}`];
+  if (F.uf) partes.push(UFI[F.uf].estado); else if (F.reg) partes.push(REG[F.reg]);
+  if (F.cat) partes.push(catNome(F.cat));
+  $('#f-resumo').textContent = 'Mostrando: ' + partes.join(' · ');
+}
+['ini', 'fim', 'reg', 'uf', 'cat'].forEach(k => $('#f-' + k).addEventListener('change', e => {
+  const v = e.target.value; F[k] = (k === 'ini' || k === 'fim') ? +v : v;
+  if (k === 'reg') F.uf = '';
+  if (F.ini > F.fim) { if (k === 'ini') F.fim = F.ini; else F.ini = F.fim; }
+  montaFiltros(); renderAll();
+}));
+$('#f-limpar').addEventListener('click', () => { Object.assign(F, {ini: 0, fim: D.meses.length - 1, reg: '', uf: '', cat: ''}); montaFiltros(); renderAll(); });
+
+// soma do cubo com filtros; ign = dimensões ignoradas
+function soma(keyFn, ign = {}) {
+  const out = new Map();
+  for (const r of D.cubo) {
+    if (!ign.periodo && (r[0] < F.ini || r[0] > F.fim)) continue;
+    const uf = D.ufs[r[1]];
+    if (!ign.local && F.uf && uf !== F.uf) continue;
+    if (!ign.local && !F.uf && F.reg && UFREG[uf] !== F.reg) continue;
+    if (!ign.cat && F.cat && D.cats[r[2]] !== F.cat) continue;
+    const k = keyFn(r); let a = out.get(k);
+    if (!a) { a = D.cols.map((c, i) => HIDX.has(i) ? new Map() : 0); out.set(k, a); }
+    for (let i = 0; i < D.cols.length; i++) {
+      if (HIDX.has(i)) { const h = a[i]; for (const [kk, n] of r[i + 3]) h.set(kk, (h.get(kk) || 0) + n); }
+      else a[i] += r[i + 3];
+    }
+  }
+  return out;
+}
+const v = (a, c) => a ? a[C[c] - 3] : 0;
+const pct = (a, b) => b ? 100 * a / b : 0;
+// mediana a partir do histograma da célula agregada
+function med(a, c) {
+  const h = a ? a[C[c] - 3] : null; if (!h || !h.size) return NaN;
+  const ks = [...h.keys()].sort((x, y) => x - y); let tot = 0; ks.forEach(k => tot += h.get(k));
+  let acc = 0; for (const k of ks) { acc += h.get(k); if (acc >= tot / 2) return k / D.hist_fator[c]; }
+  return NaN;
+}
+
+/* ---------- KPIs ---------- */
+function kpis() {
+  const t = soma(() => 'x').get('x');
+  const k = t ? [
+    ['Vendas (GMV)', brlk(v(t, 'gmv')), `${fmt(v(t, 'ped'))} pedidos`],
+    ['Pedidos atrasados', fmt(pct(v(t, 'atr'), v(t, 'ent')), 1) + '%', 'dos pedidos entregues', pct(v(t, 'atr'), v(t, 'ent')) > 8],
+    ['Nota média', fmt(v(t, 'nota') / v(t, 'av'), 2), `${fmt(pct(v(t, 'n1'), v(t, 'av')), 1)}% de notas 1`],
+    ['Postagem fora do prazo', fmt(pct(v(t, 'pf'), v(t, 'et')), 1) + '%', 'pedidos postados depois do limite'],
+    ['Prazo prometido x real', `${fmt(med(t, 'h_prom'), 0)} x ${fmt(med(t, 'h_real'), 0)} dias`, 'mediana dos pedidos entregues'],
+    ['Frete', fmt(pct(v(t, 'frete'), v(t, 'gmv')), 1) + '%', 'do valor dos produtos'],
+  ] : [['Sem dados', '–', 'nenhum pedido com esses filtros']];
+  $('#kpis').innerHTML = k.map(([l, val, c, al]) => `<div class="card kpi${al ? ' alert' : ''}"><div class="lab">${l}</div><div class="val${val.length > 10 ? ' sm' : ''}">${val}</div><div class="ctx">${c}</div></div>`).join('');
+  const L = D.lojistas_mes.filter(r => r.mes >= D.meses[F.ini] && r.mes <= D.meses[F.fim]);
+  const a = L[0], b = L[L.length - 1];
+  const kl = [
+    ['Lojistas ativos', fmt(b.lojistas_ativos), `em ${mesRot(b.mes)} (${fmt(a.lojistas_ativos)} em ${mesRot(a.mes)})`, 'Período'],
+    ['Vendas por lojista ativo', brl(b.gmv_por_lojista), `em ${mesRot(b.mes)} (${brl(a.gmv_por_lojista)} em ${mesRot(a.mes)})`, 'Período'],
+    ['Lojistas que pararam de vender', '55%', 'dos que entraram até fev/2018; o acaso da amostra explicaria 22%', 'Fixo', true],
+    ['Esfriando ou em risco', '324', 'lojistas que já venderam bem e desaceleraram', 'Fixo'],
+  ];
+  $('#kpis-loj').innerHTML = kl.map(([l, val, c, tg, al]) => `<div class="card kpi${al ? ' alert' : ''}"><div class="lab">${l}</div><div class="val${val.length > 10 ? ' sm' : ''}">${val}</div><div class="ctx">${c}</div><span class="tag">${tg}</span></div>`).join('');
+}
+
+/* ---------- utilitários de gráfico ---------- */
+function eixoY(s, m, W, Y, ticks, f = x => x) { ticks.forEach(t => { el('line', {x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), class: 'gridl'}, s); txt(s, m.l - 6, Y(t) + 4, f(t), {'text-anchor': 'end', 'font-size': 11}); }); }
+function nice(max) { const p = Math.pow(10, Math.floor(Math.log10(max || 1))); const n = max / p; const st = n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10; return st * p; }
+function linhas(id, labels, series, opt = {}) {
+  const W = CW(id), H = opt.H || 250, m = {l: 44, r: 16, t: 12, b: 28};
+  const s = svgBox(id, W, H), iw = W - m.l - m.r, ih = H - m.t - m.b, n = labels.length;
+  let max = Math.max(1e-9, ...series.flatMap(x => x.vals.filter(v => v != null))); max = opt.max || nice(max * 1.1);
+  const X = i => m.l + (n === 1 ? iw / 2 : i * iw / (n - 1)), Y = v => m.t + ih - v / max * ih;
+  eixoY(s, m, W, Y, [0, max / 2, max], opt.fy || (x => fmt(x)));
+  const passo = Math.ceil(n / (W > 460 ? 7 : 4));
+  labels.forEach((l, i) => { if ((i % passo === 0 && (n - 1 - i >= passo / 2 || i === n - 1)) || i === n - 1) txt(s, X(i), H - 8, l, {'text-anchor': 'middle', 'font-size': 10.5}); });
+  series.forEach(se => {
+    const pts = se.vals.map((v, i) => v == null ? null : [X(i), Y(v)]).filter(Boolean);
+    el('path', {d: pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(''), fill: 'none', stroke: se.cor, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, s);
+    if (n <= 24) pts.forEach(p => el('circle', {cx: p[0], cy: p[1], r: 3, fill: se.cor}, s));
+  });
+  const cross = el('line', {y1: m.t, y2: m.t + ih, stroke: css('--ink-3'), 'stroke-dasharray': '3 3', opacity: 0}, s);
+  const hit = el('rect', {x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent'}, s);
+  hit.addEventListener('pointermove', e => {
+    const pt = s.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(s.getScreenCTM().inverse());
+    const i = Math.max(0, Math.min(n - 1, Math.round((p.x - m.l) / iw * (n - 1))));
+    cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('opacity', 1);
+    showTip(e, `<b>${labels[i]}</b><br>` + series.map(se => `${se.nome}: ${se.vals[i] == null ? '–' : (opt.ft || (x => fmt(x, 1)))(se.vals[i])}`).join('<br>') + (opt.extra ? opt.extra(i) : ''));
+  });
+  hit.addEventListener('pointerleave', () => { hideTip(); cross.setAttribute('opacity', 0); });
+}
+function hbars(id, rows, opt) {
+  const W = CW(id), rowH = opt.rowH || 32, m = {l: opt.left || 120, r: 64, t: 4, b: 4};
+  const H = m.t + m.b + rows.length * rowH, s = svgBox(id, W, H), iw = W - m.l - m.r;
+  const max = opt.max || Math.max(...rows.map(r => r.parts.reduce((a, p) => a + p.v, 0))) * 1.05 || 1;
+  rows.forEach((r, i) => {
+    const y = m.t + i * rowH + rowH * .18, h = rowH * .64;
+    txt(s, m.l - 8, y + h / 2 + 4, r.label, {'text-anchor': 'end', 'font-size': 12, fill: css('--ink')});
+    let x = m.l;
+    r.parts.forEach(p => { const w = Math.max(p.v / max * iw, p.v > 0 ? 1 : 0); const b = el('rect', {x, y, width: w, height: h, rx: 4, fill: p.c}, s); hover(b, p.tip); x += w + (r.parts.length > 1 ? 2 : 0); });
+    txt(s, x + 6, y + h / 2 + 4, r.end, {class: 'val', 'font-size': 12});
+  });
+}
+function pares(id, rows, cores, opt = {}) {  // duas barras por linha
+  const W = CW(id), rowH = opt.rowH || 46, m = {l: 8, r: 58}, H = rows.length * rowH + 4, s = svgBox(id, W, H), iw = W - m.l - m.r;
+  rows.forEach((r, i) => {
+    const y = i * rowH, max = opt.max || Math.max(r.a, r.b) * 1.08 || 1;
+    txt(s, m.l, y + 13, r.label, {'font-size': 12, fill: css('--ink')});
+    [[r.a, cores[0], r.na], [r.b, cores[1], r.nb]].forEach(([val, c, nome], j) => {
+      const b = el('rect', {x: m.l, y: y + 19 + j * 13, width: Math.max(val / max * iw, 1), height: 11, rx: 3, fill: c}, s);
+      hover(b, `<b>${r.label}</b><br>${nome}: ${r.f(val)}`);
+      txt(s, m.l + val / max * iw + 6, y + 28 + j * 13, r.f(val), {class: 'val', 'font-size': 11});
+    });
+  });
+}
+
+/* ---------- seção lojistas ---------- */
+function lojIdx() {
+  const L = D.lojistas_mes.filter(r => r.mes >= D.meses[F.ini] && r.mes <= D.meses[F.fim]);
+  const b = L[0];
+  linhas('#c-loj-idx', L.map(r => mesRot(r.mes)), [
+    {nome: 'Lojistas ativos', cor: css('--s2'), vals: L.map(r => 100 * r.lojistas_ativos / b.lojistas_ativos)},
+    {nome: 'Vendas totais', cor: css('--muted'), vals: L.map(r => 100 * r.gmv / b.gmv)},
+    {nome: 'Vendas por lojista', cor: css('--s1'), vals: L.map(r => 100 * r.gmv_por_lojista / b.gmv_por_lojista)},
+  ], {ft: x => fmt(x, 0), extra: i => `<br>${fmt(L[i].lojistas_ativos)} lojistas · ${brl(L[i].gmv_por_lojista)} por lojista`});
+}
+function inativos() {
+  const d = D.inativos.filter(r => r.vendas_primeiros_90d !== 'todos');
+  pares('#c-inativos', d.map(r => ({label: `${r.vendas_primeiros_90d} venda${r.vendas_primeiros_90d === '1' ? '' : 's'} nos primeiros 90 dias (${fmt(r.lojistas)} lojistas)`, a: r.inativos_pct, b: r.silencio_por_acaso_pct, na: 'Ficaram inativos', nb: 'Esperado pelo acaso', f: x => fmt(x, 0) + '%'})), [css('--s2'), css('--muted')], {max: 100, rowH: 44});
+}
+function rfm() {
+  pares('#c-rfm', D.rfm.map(r => ({label: `${r.segmento.slice(2)} (${fmt(r.lojistas)} lojistas, nota ${fmt(r.nota_media, 2)})`, a: r.pct_lojistas, b: r.pct_gmv_90d, na: '% dos lojistas', nb: '% das vendas dos últimos 90 dias', f: x => fmt(x, 1) + '%'})), [css('--muted'), css('--s1')], {max: 70, rowH: 42});
+}
+function dgrupo() {
+  const G = Object.fromEntries(D.d_grupo.map(r => [r.k, r]));
+  const rows = [['taxa_nota1', 'Pedidos com nota 1', '%'], ['post_fora', 'Postagem fora do prazo', '%'], ['atraso', 'Pedidos atrasados', '%'], ['c_lojista_por100', 'Reclamações de envio ou estoque a cada 100 pedidos', ''], ['c_produto_por100', 'Reclamações de produto a cada 100 pedidos', '']];
+  pares('#c-dgrupo', rows.map(([k, l, u]) => ({label: l, a: G[k].prejudicam, b: G[k]['demais_30+'], na: '46 lojistas', nb: 'Outros 582', f: x => fmt(x, 1) + u})), [css('--s2'), css('--muted')], {rowH: 44});
+}
+
+function diverg(id, rows, opt) {
+  const W = CW(id) > 500 ? Math.min(1100, $(id).clientWidth) : CW(id);
+  const narrow = W < (opt.narrowAt || 560), rowH = opt.rowH || 30, m = {l: narrow ? 8 : opt.left, r: 20, t: 8, b: 30}, lab = narrow ? 16 : 0;
+  const H = m.t + m.b + rows.length * (rowH + lab), s = svgBox(id, W, H), iw = W - m.l - m.r;
+  const X = x => m.l + (Math.max(opt.lo, Math.min(opt.hi, x)) - opt.lo) / (opt.hi - opt.lo) * iw;
+  opt.ticks.forEach(t => { el('line', {x1: X(t), x2: X(t), y1: m.t, y2: H - m.b, class: 'gridl', ...(t === 0 ? {stroke: css('--ink-3')} : {})}, s); txt(s, X(t), H - 10, (t > 0 ? '+' : '') + t + opt.unit, {'text-anchor': 'middle', 'font-size': 10.5}); });
+  rows.forEach((r, i) => {
+    const y0 = m.t + i * (rowH + lab), y = y0 + lab + rowH / 2;
+    if (narrow) txt(s, m.l, y0 + 12, r.label, {'font-size': 11.5, fill: css('--ink')}); else txt(s, m.l - 10, y + 4, r.label, {'text-anchor': 'end', 'font-size': 12, fill: css('--ink')});
+    const b = el('rect', {x: Math.min(X(0), X(r.v)), y: y - 8, width: Math.max(1, Math.abs(X(r.v) - X(0))), height: 16, rx: 3, fill: r.c}, s);
+    if (r.lo != null) el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: css('--ink'), 'stroke-width': 1.4, 'pointer-events': 'none'}, s);
+    if (opt.end) txt(s, r.v >= 0 ? X(r.v) + 6 : X(r.v) - 6, y + 4, opt.end(r.v), {class: 'val', 'font-size': 11, 'text-anchor': r.v >= 0 ? 'start' : 'end'});
+    hover(b, r.tip);
+  });
+}
+function ativ() {
+  const d = D.ativacao.filter(r => !r.fator.startsWith('Preço'));
+  diverg('#c-ativ', d.map(r => ({label: r.fator, v: r.efeito_pp, lo: r.margem_baixa_pp, hi: r.margem_alta_pp,
+    c: r.leitura === 'aumenta a chance' ? css('--s1') : r.leitura === 'reduz a chance' ? css('--s2') : css('--muted'),
+    tip: `<b>${r.fator}</b><br>${fmt(r.lojistas_com_o_fator)} lojistas<br>Efeito: ${r.efeito_pp > 0 ? '+' : ''}${fmt(r.efeito_pp, 1)} pontos percentuais<br>Margem: ${fmt(r.margem_baixa_pp, 1)} a ${fmt(r.margem_alta_pp, 1)}<br>${r.leitura}`})),
+    {left: 250, lo: -30, hi: 30, ticks: [-30, -20, -10, 0, 10, 20, 30], unit: ' p.p.'});
+}
+
+function sobrev() {
+  const d = D.sobrevivencia;
+  linhas('#c-sobrev', d.map(r => r.meses_desde_a_primeira_venda + 'm'), [
+    {nome: '5+ vendas nos primeiros 90 dias', cor: css('--s1'), vals: d.map(r => r['5+ vendas nos primeiros 90 dias'])},
+    {nome: 'Todos', cor: css('--muted'), vals: d.map(r => r.ativos_pct)},
+    {nome: 'Até 4 vendas', cor: css('--s2'), vals: d.map(r => r['até 4 vendas nos primeiros 90 dias'])},
+  ], {max: 100, fy: x => fmt(x, 0) + '%', ft: x => fmt(x, 0) + '%', extra: i => `<br>${fmt(d[i].lojistas_observados)} lojistas observados`});
+}
+function amostra() {
+  const d = D.amostra;
+  linhas('#c-amostra', d.map(r => mesRot(r.mes)), [
+    {nome: 'Compradores em SP', cor: css('--s1'), vals: d.map(r => r.compradores_SP_pct)},
+    {nome: 'Lojistas em SP', cor: css('--s4'), vals: d.map(r => r.lojistas_SP_pct)},
+  ], {max: 100, fy: x => fmt(x, 0) + '%', ft: x => fmt(x, 1) + '%', extra: i => `<br>Ticket médio R$ ${fmt(d[i].ticket_medio, 0)} · ${fmt(d[i].pedidos)} pedidos`});
+}
+
+/* ---------- entrega ---------- */
+function atrasoMes() {
+  const S = soma(r => r[0], {periodo: true}); const idx = []; for (let i = F.ini; i <= F.fim; i++) idx.push(i);
+  linhas('#c-atraso-mes', idx.map(i => mesRot(D.meses[i])), [
+    {nome: 'Pedidos atrasados', cor: css('--s2'), vals: idx.map(i => S.get(i) ? pct(v(S.get(i), 'atr'), v(S.get(i), 'ent')) : null)},
+    {nome: 'Notas 1', cor: css('--s1'), vals: idx.map(i => S.get(i) ? pct(v(S.get(i), 'n1'), v(S.get(i), 'av')) : null)},
+  ], {fy: x => fmt(x, 0) + '%', ft: x => fmt(x, 1) + '%', extra: i => S.get(idx[i]) ? `<br>${fmt(v(S.get(idx[i]), 'ped'))} pedidos` : ''});
+}
+function notaDias() {
+  const d = D.nota_atraso.filter(r => r.dv >= -20 && r.dv <= 10);
+  const W = CW('#c-nota-dias'), H = 240, m = {l: 30, r: 10, t: 14, b: 34};
+  const s = svgBox('#c-nota-dias', W, H), iw = W - m.l - m.r, ih = H - m.t - m.b, bw = iw / d.length;
+  const Y = x => m.t + ih - x / 5 * ih;
+  eixoY(s, m, W, Y, [0, 1, 2, 3, 4, 5]);
+  d.forEach((r, i) => {
+    const x = m.l + i * bw + bw * .12, w = bw * .76, late = r.dv > 0;
+    const b = el('rect', {x, y: Y(r.nota_media), width: w, height: Y(0) - Y(r.nota_media), rx: 2, fill: late ? css('--s2') : r.dv === 0 ? css('--s4') : css('--s1')}, s);
+    hover(b, `<b>${r.dv === 0 ? 'No dia prometido' : r.dv < 0 ? -r.dv + ' dias antes do prometido' : r.dv + ' dias de atraso'}</b><br>Nota média ${fmt(r.nota_media, 2)}<br>${fmt(r.pedidos)} pedidos`);
+    if (r.dv % 5 === 0) txt(s, x + w / 2, H - m.b + 14, r.dv === 0 ? 'no dia' : (r.dv > 0 ? '+' : '') + r.dv, {'text-anchor': 'middle', 'font-size': 10.5});
+  });
+  txt(s, m.l + iw / 2, H - 4, 'dias em relação à data prometida (negativo = antes)', {'text-anchor': 'middle', 'font-size': 11});
+}
+function etapas() {
+  const S = soma(r => UFREG[D.ufs[r[1]]], {local: true});
+  hbars('#c-etapas', ['SE', 'S', 'CO', 'NE', 'N'].filter(k => S.get(k)).map(k => { const a = S.get(k), p = med(a, 'h_post'), tr = med(a, 'h_transp');
+    return {label: REG[k], end: `${fmt(p, 1)} + ${fmt(tr, 1)} d`, parts: [{v: p, c: css('--s4'), tip: `<b>${REG[k]}</b><br>Postagem: ${fmt(p, 1)} dias`}, {v: tr, c: css('--s1'), tip: `<b>${REG[k]}</b><br>Transporte: ${fmt(tr, 1)} dias<br>Atraso: ${fmt(pct(v(a, 'atr'), v(a, 'ent')), 1)}%`}]}; }), {left: 100, rowH: 38});
+}
+function temas() {
+  const t = soma(() => 'x').get('x'); const tot = t ? v(t, 'log') + v(t, 'loj') + v(t, 'prod') + v(t, 'out') : 0;
+  const G = [['log', 'Entrega', '--s1'], ['loj', 'Erro de envio ou estoque', '--s2'], ['prod', 'Produto', '--s3'], ['out', 'Atendimento e outros', '--muted']];
+  if (!tot) { $('#c-temas').innerHTML = '<p class="sub">Sem comentários de nota 1 com esses filtros.</p>'; return; }
+  hbars('#c-temas', G.map(([k, l, c]) => ({label: l, end: fmt(pct(v(t, k), tot), 1) + '%', parts: [{v: pct(v(t, k), tot), c: css(c), tip: `<b>${l}</b><br>${fmt(v(t, k))} comentários (${fmt(pct(v(t, k), tot), 1)}%)`}]})), {left: 170, rowH: 40, max: 100});
+}
+function prazo() {
+  const d = D.prazo_regiao, W = CW('#c-prazo') > 500 ? Math.min(1100, $('#c-prazo').clientWidth) : CW('#c-prazo');
+  const rowH = 40, m = {l: 100, r: W > 700 ? 230 : 20, t: 8, b: 30}, H = m.t + m.b + d.length * rowH;
+  const s = svgBox('#c-prazo', W, H), iw = W - m.l - m.r, X = x => m.l + (x - 10) / 32 * iw;
+  [15, 20, 25, 30, 35, 40].forEach(t => { el('line', {x1: X(t), x2: X(t), y1: m.t, y2: H - m.b, class: 'gridl'}, s); txt(s, X(t), H - 10, t + ' dias', {'text-anchor': 'middle', 'font-size': 10.5}); });
+  d.forEach((r, i) => {
+    const y = m.t + i * rowH + rowH / 2;
+    txt(s, m.l - 10, y + 4, REG[r.regiao], {'text-anchor': 'end', 'font-size': 12, fill: css('--ink')});
+    el('line', {x1: X(r.prometido_atual), x2: X(r.prometido_rota_p93), y1: y, y2: y, stroke: css('--grid'), 'stroke-width': 4}, s);
+    const a = el('circle', {cx: X(r.prometido_atual), cy: y, r: 7, fill: css('--muted')}, s);
+    const b = el('circle', {cx: X(r.prometido_rota_p93), cy: y, r: 7, fill: css('--s1')}, s);
+    const t = `<b>${REG[r.regiao]}</b><br>Promessa: ${fmt(r.prometido_atual)} → ${fmt(r.prometido_rota_p93)} dias<br>Atraso: ${fmt(r.atraso_atual_pct, 1)}% → ${fmt(r.atraso_rota_p93_pct, 1)}%<br>Nota esperada: ${fmt(r.nota_atual, 2)} → ${fmt(r.nota_rota_p93, 2)}`;
+    hover(a, t); hover(b, t);
+    if (W > 700) txt(s, W - m.r + 16, y + 4, `atraso ${fmt(r.atraso_atual_pct, 1)}% → ${fmt(r.atraso_rota_p93_pct, 1)}%`, {'font-size': 11.5});
+  });
+}
+
+/* ---------- geografia ---------- */
+const METRICS = {
+  intens: {nome: 'Pedidos por 100 mil hab.', sub: 'Pedidos no período a cada 100 mil habitantes', f: x => fmt(x, 0)},
+  real: {nome: 'Prazo real', sub: 'Dias da compra à entrega (mediana)', f: x => fmt(x, 0) + 'd'},
+  atraso: {nome: 'Atraso', sub: '% dos pedidos entregues depois do prometido', f: x => fmt(x, 0) + '%'},
+  frete: {nome: 'Frete', sub: 'Frete como % do valor dos produtos', f: x => fmt(x, 0) + '%'},
+  nota: {nome: 'Nota média', sub: 'Nota média das avaliações', f: x => fmt(x, 2)},
+};
+let metric = 'intens';
+$('#seg-map').innerHTML = Object.entries(METRICS).map(([k, m]) => `<button type="button" data-k="${k}" aria-pressed="${k === metric}">${m.nome}</button>`).join('');
+$('#seg-map').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; metric = b.dataset.k; document.querySelectorAll('#seg-map button').forEach(x => x.setAttribute('aria-pressed', x.dataset.k === metric)); mapa(); });
+function porUF() {
+  const S = soma(r => D.ufs[r[1]], {local: true}), out = {};
+  D.ufs.forEach(u => { const a = S.get(u); if (!a || !v(a, 'ped')) return;
+    out[u] = {intens: 1e5 * v(a, 'ped') / UFI[u].populacao_2017, real: med(a, 'h_real'), atraso: pct(v(a, 'atr'), v(a, 'ent')), frete: pct(v(a, 'frete'), v(a, 'gmv')), nota: v(a, 'nota') / (v(a, 'av') || 1), ped: v(a, 'ped')}; });
+  return out;
+}
+function mapa() {
+  const M = METRICS[metric], U = porUF(), vals = Object.values(U).map(x => x[metric]);
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const seq = ['--seq0', '--seq1', '--seq2', '--seq3', '--seq4', '--seq5'].map(css);
+  const bin = x => Math.min(5, Math.floor((x - lo) / (hi - lo + 1e-9) * 6));
+  $('#map-sub').textContent = M.sub + '. Cor mais escura = valor maior.';
+  const host = $('#c-map'); host.innerHTML = '';
+  const s = el('svg', {viewBox: '0 0 580 515', role: 'img', 'aria-label': 'Mapa do Brasil: ' + M.nome}, host); s.style.maxWidth = '520px'; s.style.margin = '0 auto';
+  const dark = css('--bg') === '#0d131c';
+  D.ufs.forEach(u => {
+    const x = U[u]; const p = el('path', {d: GEO[u], fill: x ? seq[bin(x[metric])] : css('--grid'), stroke: css('--surface'), 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, s);
+    p.addEventListener('pointerenter', () => { hl.setAttribute('d', GEO[u]); hl.setAttribute('visibility', 'visible'); });
+    p.addEventListener('pointerleave', () => { hl.setAttribute('visibility', 'hidden'); hideTip(); });
+    hover(p, () => x ? `<b>${UFI[u].estado}</b><br>${M.nome}: ${M.f(x[metric])}<br>${fmt(x.ped)} pedidos · prazo ${fmt(x.real, 0)} dias (mediana)<br>Atraso ${fmt(x.atraso, 1)}% · frete ${fmt(x.frete, 0)}% · nota ${fmt(x.nota, 2)}` : `<b>${UFI[u].estado}</b><br>Sem pedidos com esses filtros`);
+  });
+  const hl = el('path', {fill: 'none', stroke: css('--ink'), 'stroke-width': 2.2, 'pointer-events': 'none', visibility: 'hidden'}, s);
+  s.addEventListener('pointerleave', () => { hl.setAttribute('visibility', 'hidden'); hideTip(); });
+  const lb = el('g', {'pointer-events': 'none'}, s);
+  D.ufs.forEach(u => { const x = U[u]; if (!x) return; const b = bin(x[metric]), [cx, cy] = CENT[u], co = CALLOUT[u];
+    if (co) { el('line', {x1: cx, y1: cy, x2: co[0] - 3, y2: co[1] - 4, stroke: css('--ink-3'), 'stroke-width': .8}, lb); el('circle', {cx, cy, r: 1.6, fill: css('--ink-3')}, lb);
+      txt(lb, co[0], co[1], u + ' ' + M.f(x[metric]), {'font-size': 11, 'font-weight': 600, fill: css('--ink')}); }
+    else { const ink = dark ? (b >= 4 ? '#0d131c' : '#ffffff') : (b >= 3 ? '#ffffff' : css('--ink'));
+      txt(lb, cx, cy - 2, u, {'text-anchor': 'middle', 'font-size': 11, 'font-weight': 600, fill: ink}); txt(lb, cx, cy + 11, M.f(x[metric]), {'text-anchor': 'middle', 'font-size': 10.5, fill: ink}); } });
+  const st = (hi - lo) / 6; $('#map-leg').innerHTML = seq.map((c, i) => `<span><i style="background:${c}"></i>${M.f(lo + st * i)}–${M.f(lo + st * (i + 1))}</span>`).join('');
+}
+function scatter() {
+  const U = porUF(), pts = Object.entries(U);
+  const W = CW('#c-scatter'), H = 300, m = {l: 44, r: 16, t: 24, b: 36};
+  const s = svgBox('#c-scatter', W, H), iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const pts2 = pts.filter(p => !isNaN(p[1].real)); pts.length = 0; pts.push(...pts2);
+  const xs = pts.map(p => p[1].real), ys = pts.map(p => p[1].intens);
+  const x0 = Math.floor(Math.min(...xs) - 1), x1 = Math.ceil(Math.max(...xs) + 1), ym = nice(Math.max(...ys) * 1.1);
+  const X = x => m.l + (x - x0) / (x1 - x0) * iw, Y = y => m.t + ih - y / ym * ih;
+  eixoY(s, m, W, Y, [0, ym / 2, ym]);
+  const st = Math.max(1, Math.round((x1 - x0) / 5)); for (let t = x0; t <= x1; t += st) txt(s, X(t), H - 18, t, {'text-anchor': 'middle', 'font-size': 11});
+  txt(s, m.l + iw / 2, H - 2, 'prazo real, mediana (dias)', {'text-anchor': 'middle', 'font-size': 11.5});
+  txt(s, m.l - 34, 12, 'pedidos por 100 mil habitantes', {'font-size': 11.5});
+  const LBL = new Set(['SP', 'RJ', 'DF', 'MG', 'PR', 'SC', 'RS', 'BA', 'PE', 'PA', 'MA', 'AM', 'RR', 'AL']);
+  pts.forEach(([u, x]) => { const c = el('circle', {cx: X(x.real), cy: Y(x.intens), r: 6, fill: css('--s1'), stroke: css('--surface'), 'stroke-width': 2}, s);
+    hover(c, `<b>${UFI[u].estado}</b><br>${fmt(x.intens, 0)} pedidos por 100 mil hab.<br>Prazo mediano ${fmt(x.real, 0)} dias<br>Renda per capita ${brl(UFI[u].renda_pc_2017)}`);
+    if (LBL.has(u)) txt(s, X(x.real) + 8, Y(x.intens) - 6, u, {'font-size': 11}); });
+}
+function frete() {
+  const S = soma(r => UFREG[D.ufs[r[1]]], {local: true});
+  hbars('#c-frete', ['SE', 'S', 'CO', 'NE', 'N'].filter(k => S.get(k)).map(k => { const a = S.get(k), p = pct(v(a, 'frete'), v(a, 'gmv'));
+    return {label: REG[k], end: fmt(p, 1) + '%', parts: [{v: p, c: css('--s1'), tip: `<b>${REG[k]}</b><br>Frete: ${fmt(p, 1)}% do valor dos produtos<br>Frete médio por pedido: ${brl(v(a, 'frete') / v(a, 'ped'))}`}]}; }), {left: 100, rowH: 38});
+}
+$('#t-cen').innerHTML = D.cenarios.filter(r => r.pct_sobre_atual != null && !isNaN(r.pct_sobre_atual)).map(r => `<tr><td>${r.cenario}</td><td class="n">+${fmt(r.compradores_a_mais / 1000, 0)} mil (${fmt(r.pct_sobre_atual, 0)}%)</td><td class="n">${fmt(r.ic95_min / 1000, 0)} a ${fmt(r.ic95_max / 1000, 0)} mil</td></tr>`).join('');
+
+/* ---------- vendas ---------- */
+function vendas() {
+  const S = soma(r => r[0], {periodo: true}); const idx = []; for (let i = F.ini; i <= F.fim; i++) idx.push(i);
+  const W = CW('#c-vendas'), H = 250, m = {l: 50, r: 10, t: 12, b: 28};
+  const s = svgBox('#c-vendas', W, H), iw = W - m.l - m.r, ih = H - m.t - m.b, bw = iw / idx.length;
+  const vals = idx.map(i => S.get(i) ? v(S.get(i), 'gmv') / 1000 : 0), max = nice(Math.max(...vals, 1) * 1.1);
+  const Y = x => m.t + ih - x / max * ih; eixoY(s, m, W, Y, [0, max / 2, max], x => fmt(x));
+  const passo = Math.ceil(idx.length / (W > 460 ? 10 : 5));
+  idx.forEach((i, k) => { const x = m.l + k * bw + bw * .15, w = bw * .7, bf = D.meses[i] === '2017-11';
+    const b = el('rect', {x, y: Y(vals[k]), width: w, height: Y(0) - Y(vals[k]), rx: 3, fill: bf ? css('--s2') : css('--s1')}, s);
+    const a = S.get(i); hover(b, `<b>${mesRot(D.meses[i])}</b><br>${brlk(vals[k] * 1000)}<br>${a ? fmt(v(a, 'ped')) : 0} pedidos`);
+    if (k % passo === 0) txt(s, x + w / 2, H - 8, mesRot(D.meses[i]), {'text-anchor': 'middle', 'font-size': 10.5}); });
+}
+function cats() {
+  const S = soma(r => D.cats[r[2]], {cat: true}); let tot = 0; S.forEach(a => tot += v(a, 'gmv'));
+  const rows = [...S.entries()].map(([c, a]) => [c, v(a, 'gmv')]).sort((a, b) => (a[0] === 'outras') - (b[0] === 'outras') || b[1] - a[1]);
+  hbars('#c-cats', rows.map(([c, g]) => ({label: catNome(c), end: fmt(pct(g, tot), 1) + '%', parts: [{v: pct(g, tot), c: c === F.cat ? css('--s2') : c === 'outras' ? css('--muted') : css('--s1'), tip: `<b>${catNome(c)}</b><br>${brlk(g)} (${fmt(pct(g, tot), 1)}%)`}]})), {left: 170, rowH: 24});
+}
+
+function ticket() {
+  const S = soma(r => r[0], {periodo: true}); const idx = []; for (let i = F.ini; i <= F.fim; i++) idx.push(i);
+  linhas('#c-ticket', idx.map(i => mesRot(D.meses[i])), [
+    {nome: 'Ticket médio', cor: css('--s1'), vals: idx.map(i => S.get(i) && v(S.get(i), 'ped') ? v(S.get(i), 'gmv') / v(S.get(i), 'ped') : null)},
+  ], {fy: x => 'R$ ' + fmt(x), ft: x => 'R$ ' + fmt(x, 0), extra: i => S.get(idx[i]) ? `<br>${fmt(v(S.get(idx[i]), 'ped'))} pedidos` : ''});
+}
+function catloj() {
+  const d = D.cat_lojistas.filter(r => !String(r.cat).startsWith('TOTAL')).sort((a, b) => a.vendas_por_lojista_var_pct - b.vendas_por_lojista_var_pct);
+  diverg('#c-catloj', d.map(r => ({label: catNome(r.cat), v: r.vendas_por_lojista_var_pct, c: r.vendas_por_lojista_var_pct < 0 ? css('--s2') : css('--s1'),
+    tip: `<b>${catNome(r.cat)}</b><br>Lojistas ativos: +${fmt(r.lojistas_var_pct, 0)}%<br>Vendas: +${fmt(r.vendas_var_pct, 0)}%<br>Venda por lojista: ${r.vendas_por_lojista_var_pct > 0 ? '+' : ''}${fmt(r.vendas_por_lojista_var_pct, 0)}%`})),
+    {left: 150, rowH: 24, narrowAt: 400, lo: -60, hi: 60, ticks: [-50, -25, 0, 25, 50], unit: '%', end: x => (x > 0 ? '+' : '') + fmt(x, 0) + '%'});
+}
+
+/* ---------- soluções ---------- */
+const SOL = [
+  ['Ajustar a promessa de prazo a cada rota', 'Baixo', 'Baixo', 'Alto'],
+  ['Pedir a avaliação só depois da entrega e separá-la por lojista', 'Baixo', 'Baixo', 'Médio'],
+  ['Avisar o comprador quando o pedido vier em vários pacotes', 'Baixo', 'Baixo', 'Médio'],
+  ['Alertar o lojista antes do fim do prazo de postagem', 'Baixo', 'Baixo', 'Médio'],
+  ['Painel com indicadores e reclamações para o lojista', 'Baixo a médio', 'Baixo', 'Médio'],
+  ['Ampliar a promessa de prazo na semana da Black Friday', 'Baixo', 'Baixo', 'Médio'],
+  ['Ativação do lojista novo: descrição, primeira venda e, se couber ao lojista, frete (90 dias)', 'Baixo a médio', 'Médio', 'Alto'],
+  ['Reativação dos lojistas que esfriaram', 'Baixo', 'Médio', 'Alto'],
+  ['Comissão menor e mais exposição para lojistas bem avaliados', 'Médio', 'Baixo', 'Médio a alto'],
+  ['Campanhas de segunda compra com os marketplaces', 'Médio', 'Médio', 'Médio'],
+  ['Atrair lojistas no Norte e no Nordeste', 'Médio', 'Alto', 'Alto'],
+  ['Frete subsidiado ou consolidado para itens baratos e distantes', 'Alto', 'Médio', 'Médio'],
+  ['Centros logísticos de última milha no Sul, Sudeste e Centro-Oeste', 'Alto', 'Alto', 'Alto'],
+  ['Transportadora própria do marketplace (horizonte futuro)', 'Muito alto', 'Alto', 'Alto, a validar'],
+];
+const nivel = t => t.startsWith('Baixo') ? 'b' : t.startsWith('Médio') ? 'm' : 'a';
+$('#t-sol').innerHTML = SOL.map((r, i) => `<tr><td class="n">${i + 1}</td><td>${r[0]}</td><td><span class="nv ${nivel(r[1])}">${r[1]}</span></td><td><span class="nv ${nivel(r[2])}">${r[2]}</span></td><td>${r[3]}</td></tr>`).join('');
+
+/* ---------- render e tema ---------- */
+function renderAll() { kpis(); lojIdx(); inativos(); rfm(); dgrupo(); sobrev(); amostra(); ativ(); ticket(); catloj(); atrasoMes(); notaDias(); etapas(); temas(); prazo(); mapa(); scatter(); frete(); vendas(); cats(); }
+const root = document.documentElement;
+function curTheme() { return root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+function setLabel() { $('#themebtn').textContent = curTheme() === 'dark' ? 'Tema claro' : 'Tema escuro'; }
+try { const t = localStorage.getItem('olist-tema'); if (t) root.dataset.theme = t; } catch (e) {}
+montaFiltros(); setLabel(); renderAll();
+$('#themebtn').addEventListener('click', () => { root.dataset.theme = curTheme() === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('olist-tema', root.dataset.theme); } catch (e) {} setLabel(); renderAll(); });
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(renderAll, 150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { setLabel(); renderAll(); });
+</script>
+</body>
+</html>

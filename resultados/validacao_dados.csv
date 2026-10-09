@@ -1,0 +1,46 @@
+﻿grupo;checagem;valor;passou;observacao
+tamanho;linhas em pedidos;99441;sim;referência 99441
+tamanho;linhas em itens;112650;sim;referência 112650
+tamanho;linhas em pagamentos;103886;sim;referência 103886
+tamanho;linhas em avaliacoes;99224;sim;referência 99224
+tamanho;linhas em clientes;99441;sim;referência 99441
+tamanho;linhas em vendedores;3095;sim;referência 3095
+tamanho;linhas em produtos;32951;sim;referência 32951
+tamanho;linhas em categorias;71;sim;referência 71
+chave;order_id duplicado em pedidos;0;sim;
+chave;customer_id duplicado em clientes;0;sim;
+chave;product_id duplicado em produtos;0;sim;
+chave;seller_id duplicado em vendedores;0;sim;
+chave;review_id repetido em avaliacoes;814;sim;"esperado: o mesmo review pode cobrir mais de um pedido; a análise usa a avaliação mais recente por pedido"
+chave;pedidos com mais de uma avaliação;547;sim;tratado: avaliação mais recente por pedido
+chave;itens.order_id sem correspondência em pedidos;0;sim;
+chave;itens.product_id sem correspondência em produtos;0;sim;
+chave;itens.seller_id sem correspondência em vendedores;0;sim;
+chave;pedidos.customer_id sem correspondência em clientes;0;sim;
+chave;avaliacoes.order_id sem correspondência em pedidos;0;sim;
+chave;pagamentos.order_id sem correspondência em pedidos;0;sim;
+chave;pedidos sem itens;775;sim;"esperado: pedidos cancelados/indisponíveis podem não ter itens; ficam fora das vendas"
+datas;primeira compra;2016-09-04 21:15:19;sim;
+datas;última compra;2018-10-17 17:30:18;sim;
+datas;aprovação antes da compra;0;sim;excluídos nas etapas da entrega
+datas;transportadora antes da aprovação;1359;sim;excluídos nas etapas da entrega
+datas;entrega antes da transportadora;23;sim;excluídos nas etapas da entrega
+datas;meses com menos de 500 pedidos;2016-09, 2016-10, 2016-12, 2018-09, 2018-10;sim;fora do período padrão (jan/2017 a ago/2018)
+nulos;pedidos.order_status nulo;0;sim;
+nulos;pedidos.order_purchase_timestamp nulo;0;sim;
+nulos;pedidos.order_estimated_delivery_date nulo;0;sim;
+nulos;itens.price nulo;0;sim;
+nulos;itens.freight_value nulo;0;sim;
+nulos;itens.seller_id nulo;0;sim;
+nulos;clientes.customer_state nulo;0;sim;
+nulos;vendedores.seller_state nulo;0;sim;
+nulos;avaliacoes.review_score nulo;0;sim;
+nulos;entregues sem data de entrega;8;sim;ficam fora dos prazos
+nulos;produtos sem categoria;610;sim;tratados como 'sem_categoria'
+nulos;avaliações sem texto;56518;sim;só as com texto entram na classificação de temas
+valores;itens com preço <= 0;0;sim;
+valores;itens com frete < 0;0;sim;
+valores;notas fora de 1 a 5;0;sim;
+valores;status distintos;approved, canceled, created, delivered, invoiced, processing, shipped, unavailable;sim;
+valores;estados distintos (clientes);27;sim;esperado 27
+valores;categorias sem tradução;2;sim;o estudo usa os nomes em português

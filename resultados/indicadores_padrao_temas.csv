@@ -1,0 +1,11 @@
+﻿tema;grupo;comentarios;pct
+nao_recebido;Logística;2950;34,3
+incompleto;Lojista (separação/estoque);1399;16,2
+qualidade_anuncio;Produto;907;10,5
+produto_errado;Lojista (separação/estoque);903;10,5
+defeito_avaria;Produto;675;7,8
+outro;Outro;462;5,4
+cancelamento_estoque;Lojista (separação/estoque);440;5,1
+falha_entrega;Logística;385;4,5
+atraso;Logística;327;3,8
+atendimento;Atendimento;165;1,9

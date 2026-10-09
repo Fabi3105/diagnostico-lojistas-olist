@@ -1,7 +1,11 @@
-# Dados brutos e banco local ficam fora do GitHub (o README explica onde baixar)
-dados/
+# Dados brutos e bancos locais ficam fora do GitHub (o relatório explica onde baixar)
+dados/*
+!dados/externos/
 *.duckdb
 *.duckdb.wal
+*.sqlite
 __pycache__/
 *.pyc
+# Pastas de trabalho e notas internas
 _*
+CONCLUSOES.md
